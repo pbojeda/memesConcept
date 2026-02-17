@@ -1,0 +1,84 @@
+---
+description: This document contains all development rules and guidelines for the Memes Concept Project, applicable to all AI agents.
+alwaysApply: true
+---
+
+## 1. Core Principles - Spec-Driven Development
+
+- **Spec First**: NO implementation code is written without a prior approved specification.
+  - **Backend**: Update `docs/specs/openapi.yaml` first.
+  - **Frontend**: Update `docs/specs/ui-components.md` first.
+- **Small tasks, one at a time**: Always work in baby steps.
+- **Test-Driven Development**: Write tests before implementation code (Red-Green-Refactor).
+- **Type Safety**: Strict TypeScript. No `any`. Zod for runtime validation.
+
+## 2. Technology Stack
+
+### Frontend (`frontend/`)
+- **Framework**: Next.js (App Router)
+- **Styling**: Tailwind CSS
+- **Components**: Radix UI (Primitives)
+- **State/Data**: React Query (TanStack Query) or SWR (optional but recommended for async state)
+- **Payment**: Stripe Embedded Checkout
+- **Testing**: Cypress (E2E), Jest/Vitest (Unit)
+
+### Backend (`backend/`)
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Language**: TypeScript
+- **Database**: MongoDB (Atlas) via **Mongoose**
+- **Validation**: **Zod** (Strict schema validation)
+- **Logging**: **Pino**
+- **Payment**: Stripe Node.js SDK
+- **Testing**: Jest (Unit), Supertest (Integration)
+
+## 3. Monorepo Structure
+
+```
+memes/
+├── backend/     ← Node/Express/Mongoose
+├── frontend/    ← Next.js/Tailwind
+└── docs/        ← Specs, Plans, Notes
+    ├── specs/   ← OpenAPI, UI Specs
+    └── planning/ ← implementation_plan.md, task.md
+```
+
+### Critical Rules
+- **NEVER install dependencies in root**. Always `cd backend` or `cd frontend`.
+- **Update Documentation**: When plans change, update `docs/planning/implementation_plan.md` and `task.md`.
+
+## 4. Pre-Commit Checklist
+1. **Specs Updated?**: Ensure `docs/specs/` reflects the changes.
+2. **Tests Pass**: `npm test` (Backend), `npm run cypress:run` (Frontend).
+3. **Lint Passes**: `npm run lint`.
+4. **Build Succeeds**: `npm run build`.
+
+## 5. Workflow
+1. **Plan**: Update `docs/planning/task.md` and `implementation_plan.md`.
+2. **Spec**: Create/Update specification in `docs/specs/`.
+3. **Test**: Write failing tests based on spec.
+4. **Implement**: Write code to pass tests.
+5. **Verify**: Run full suite.
+
+## 6. Roles & Skills (Agent Personas)
+
+- **Spec-Creator**: Focuses on writing clear, detailed OpenAPI/UI specs.
+- **Code-Reviewer**: Enforces strict TypeScript, Zod schemas, and "No Magic Strings" policy.
+- **QA-Engineer**: Focuses on "Happy Path" and "Edge Case" testing in Cypress/Jest.
+
+## 7. Official Workflows & Skills
+
+### Workflows
+- **Spec-Driven Task**: `.agent/workflows/spec-driven-task.md`
+- **Review Specs**: `.agent/workflows/review-specs.md` (Planned)
+
+### Skills (Agent Personas)
+- **Frontend Planner**: `.agent/skills/frontend-planner`
+- **Backend Planner**: `.agent/skills/backend-planner`
+- **Frontend Developer**: `.agent/skills/frontend-developer`
+- **Backend Developer**: `.agent/skills/backend-developer`
+- **Code Review Specialist**: `.agent/skills/code-review-specialist`
+
+## 8. Project Memory
+- **`docs/planning/task.md`**: Single source of truth for progress.
+- **`docs/planning/implementation_plan.md`**: Detailed technical roadmap.

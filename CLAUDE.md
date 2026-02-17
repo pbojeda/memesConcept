@@ -1,0 +1,1 @@
+/Users/pb/Developer/FiveGuays/memesConcept/ai-specs/specs/base-standards.mdc
