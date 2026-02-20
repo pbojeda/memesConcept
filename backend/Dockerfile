@@ -16,6 +16,10 @@ COPY backend ./backend
 # Install dependencies for the whole root workspace
 RUN npm install
 
+# Build shared module
+WORKDIR /app/shared
+RUN npm run build
+
 # Move into the backend directory
 WORKDIR /app/backend
 
