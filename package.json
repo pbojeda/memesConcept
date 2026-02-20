@@ -1,0 +1,9 @@
+{
+    "name": "memes-concept",
+    "private": true,
+    "workspaces": [
+        "backend",
+        "frontend",
+        "shared"
+    ]
+}

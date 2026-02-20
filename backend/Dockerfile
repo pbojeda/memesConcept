@@ -6,15 +6,18 @@ FROM node:18-alpine
 
 WORKDIR /app
 
+# Copy root package.json and lockfile (if available)
+COPY package*.json ./
+
 # Copy the shared package and the backend package from the root context
 COPY shared ./shared
 COPY backend ./backend
 
+# Install dependencies for the whole root workspace
+RUN npm install
+
 # Move into the backend directory
 WORKDIR /app/backend
-
-# Install dependencies including the local shared module
-RUN npm install
 
 # Build TypeScript to Javascript
 RUN npm run build
