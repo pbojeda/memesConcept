@@ -11,24 +11,45 @@
   - [x] Setup Frontend (Next.js/Tailwind/Radix) <!-- id: 2 -->
   - [x] Configure CI/CD (GitHub Actions) <!-- id: 3 -->
 
-- [ ] **Specifications (Spec Driven Development)**
-  - [ ] Create OpenAPI Specification for Backend API <!-- id: 4 -->
-  - [ ] Create Frontend Component/Page Specification <!-- id: 5 -->
+- [/] **Specifications (Spec Driven Development)**
+  - [x] Create OpenAPI Specification for Backend API <!-- id: 4 -->
+  - [x] Create Frontend Component/Page Specification <!-- id: 5 -->
   - [ ] Review Specifications with User <!-- id: 6 -->
 
-- [ ] **Backend Implementation**
-  - [ ] Implement Product Endpoints (List, Detail) <!-- id: 7 -->
-  - [ ] Implement Order/Purchase Endpoints (Stripe Integration) <!-- id: 8 -->
-  - [ ] Implement Admin Endpoints (Basic) <!-- id: 9 -->
-  - [ ] Verify Backend with Tests (Jest) <!-- id: 10 -->
+  - [x] Ticket: [MVP-01-backend-implementation.md](docs/tickets/MVP-01-backend-implementation.md) <!-- id: 7 -->
+  - [x] Implement Product Endpoints (List, Detail) <!-- id: 8 -->
+  - [x] Implement Order/Purchase Endpoints (Stripe Integration) <!-- id: 9 -->
+  - [ ] Implement Admin Endpoints (Basic) <!-- id: 10 -->
+  - [x] Verify Backend with Tests (Jest) <!-- id: 11 -->
 
-- [ ] **Frontend Implementation**
-  - [ ] Implement Product Detail Page (Primary Landing) <!-- id: 11 -->
-  - [ ] Implement Checkout Flow (Stripe) <!-- id: 12 -->
-  - [ ] Implement Order Confirmation Page <!-- id: 13 -->
-  - [ ] Implement Product List Page (Secondary) <!-- id: 14 -->
-  - [ ] Verify Frontend with E2E Tests (Cypress) <!-- id: 15 -->
+- [x] **Frontend Implementation**
+  - [x] Ticket: [MVP-02-frontend-implementation.md](docs/tickets/MVP-02-frontend-implementation.md) <!-- id: 12 -->
+  - [x] Implement Product Detail Page (Primary Landing) <!-- id: 13 -->
+  - [ ] Bug: [BUG-01-image-host-config.md](docs/bugs/BUG-01-image-host-config.md) <!-- id: 21 -->
+  - [x] Implement Checkout Flow (Stripe) <!-- id: 14 -->
+  - [x] Implement Order Confirmation Page <!-- id: 15 -->
+  - [x] Implement Product List Page (Secondary) <!-- id: 16 -->
+  - [x] Verify Frontend with E2E Tests (Cypress) <!-- id: 17 -->
 
-- [ ] **Final Verification & Delivery**
-  - [ ] Full System Walkthrough <!-- id: 16 -->
-  - [ ] Update Documentation (README) <!-- id: 17 -->
+- [ ] **MVP Refinement & Features**
+  - [x] Ticket: [MVP-03-refinement.md](docs/tickets/MVP-03-refinement.md) <!-- id: 22 -->
+  - [x] Fix: Checkout Modal Close Button <!-- id: 23 -->
+  - [x] Feature: Stripe Shipping Address Collection <!-- id: 24 -->
+  - [x] Feature: Analytics Integration (PostHog) <!-- id: 25 -->
+  - [x] Feature: Footer & Legal Pages <!-- id: 26 -->
+  - [x] Feature: Cookie Banner <!-- id: 27 -->
+
+- [ ] **Admin & Cloudinary**
+  - [/] Ticket: [MVP-04-admin-dashboard.md](docs/tickets/MVP-04-admin-dashboard.md) <!-- id: 31 -->
+  - [x] Backend: Cloudinary & CRUD <!-- id: 32 -->
+  - [x] Frontend: Admin Dashboard & Upload (Implemented) <!-- id: 33 -->
+  - [x] Fixes: Admin List Images, Delete Modal, Variants on Store, Stripe Integration <!-- id: 40 -->
+
+- [ ] **Deployment Analysis & Verification**
+  - [x] Analyze Deployment Options (Vercel, VPS, etc.) <!-- id: 28 -->
+  - [x] Ticket: [MVP-05-final-polish.md](docs/tickets/MVP-05-final-polish.md) <!-- id: 34 -->
+  - [ ] Install & Configure Cypress <!-- id: 35 -->
+  - [x] Update README.md <!-- id: 36 -->
+  - [x] CI/CD Optimization <!-- id: 37 -->
+  - [x] Configure Build/Deploy artifacts (Dockerfile for Render Backend)
+  - [ ] Final Deployment (Vercel/Render) <!-- id: 38 -->

@@ -1,63 +1,74 @@
 ---
-description: Guide for the Spec -> Test -> Code cycle for a simplified Spec-Driven Development.
+description: Guide for the Spec -> Test -> Code cycle for a simplified Spec-Driven Development with defined Agent Roles.
 ---
 
 # Spec-Driven Task Workflow
 
 ## Quick Reference
 
-1. **Setup** - Update `task.md`, create/update specs → 🛑 SPEC APPROVAL
-2. **Implement** - Developer agent (TDD), update docs
-3. **Verify** - Tests/TypeCheck/Lint → 🛑 VERIFICATION APPROVAL
+1. **Spec** - [`spec-creator`](.agent/skills/spec-creator/SKILL.md) drafts specs → 🛑 SPEC APPROVAL
+2. **Plan** - [`planner`](.agent/skills/backend-planner/SKILL.md) creates plan → 🛑 PLAN APPROVAL
+3. **Implement** - [`developer`](.agent/skills/backend-developer/SKILL.md) writes code (TDD) → 🛑 CODE REVIEW
+4. **Review** - [`code-review-specialist`](.agent/skills/code-review-specialist/SKILL.md) audits code
+5. **Verify** - [`qa-engineer`](.agent/skills/qa-engineer/SKILL.md) tests edge cases → 🛑 MERGE
 
-## Step 1: Specification (Planning)
+## Step 1: Specification (Agent: Spec-Creator)
 
-Before writing any code, you must define WHAT you are building.
+**Role**: [`spec-creator`](.agent/skills/spec-creator/SKILL.md)
 
-1. **Update Plans**:
-   - Update `docs/planning/task.md` to mark the current task as 'in progress'.
-   - Update `docs/planning/implementation_plan.md` if the approach changes.
+1. **Create Ticket**:
+   - Manual: Create `docs/tickets/MVP-XX-name.md`.
 
-2. **Write Specifications**:
-   - **Backend**: Update `docs/specs/openapi.yaml`.
-     - Define endpoints, request bodies, success/error responses.
-     - Follow `ai-specs/specs/backend-standards.mdc`.
-   - **Frontend**: Update `docs/specs/ui-components.md` (or create a new spec file).
-     - Define component props, state, interactions.
-     - Follow `ai-specs/specs/frontend-standards.mdc`.
+2. **Run Agent**:
+   - Command: `@spec-creator Update specs for ticket docs/tickets/MVP-XX-name.md`
+   - **Output**: Updates to `docs/specs/openapi.yaml` or `ui-components.md`.
 
 3. **User Review**:
-   - Request user approval for the specs.
-   - **CRITICAL**: Do NOT proceed to implementation without explicit approval of the specs.
+   - Approve the Specs before proceeding.
 
-## Step 2: Implementation (Execution)
+## Step 2: Planning (Agent: Planner)
 
-Once specs are approved, adhere to **Test-Driven Development (TDD)**.
+**Role**: [`backend-planner`](.agent/skills/backend-planner/SKILL.md) or [`frontend-planner`](.agent/skills/frontend-planner/SKILL.md)
 
-1. **Write Failing Test**:
-   - Create a test file (`.test.ts` or Cyress spec) that asserts the behavior defined in the spec.
-   - Run the test to confirm it fails (Red).
+1. **Run Agent**:
+   - Command: `@backend-planner (or @frontend-planner) Plan the changes for docs/tickets/[ticket-name].md`
+   - **Output**: Writes `## Implementation Plan` and updates status to `PLANNED`.
 
-2. **Write Implementation**:
-   - Write the minimum code necessary to pass the test (Green).
-   - Use strict TypeScript (no `any`).
-   - Use Zod for validation.
-   - Adhere to `GEMINI.md` standards.
+2. **Review Plan**:
+   - Approve the Plan.
 
-3. **Refactor**:
-   - Clean up code while keeping tests green.
+## Step 3: Implementation (Agent: Developer)
 
-## Step 3: Verification (Finalization)
+**Role**: [`backend-developer`](.agent/skills/backend-developer/SKILL.md) or [`frontend-developer`](.agent/skills/frontend-developer/SKILL.md)
 
-1. **Run Full Suite**:
-   - Backend: `npm test`
-   - Frontend: `npm run cypress:run` (or component tests)
-   - Lint: `npm run lint`
-   - Build: `npm run build`
+1. **Run Agent**:
+   - Command: `@backend-developer (or @frontend-developer) Implement docs/tickets/[ticket-name].md`
+   - **Behavior**: TDD, Implementation, Documentation updates. Updates status to `REVIEW`.
 
-2. **Documentation**:
-   - Update `task.md` (mark as complete).
-   - Update `implementation_plan.md` (if needed).
+2. **Manual Verification**:
+   - Developer runs minimal verification (`npm test`).
 
-3. **Notify User**:
-   - Present the results and ask for final confirmation.
+## Step 4: Code Review (Agent: Reviewer)
+
+**Role**: [`code-review-specialist`](.agent/skills/code-review-specialist/SKILL.md)
+
+1. **Run Agent**:
+   - Command: `@code-review-specialist Review the changes in [folder/file]`
+   - **Behavior**: If clean, updates status to `QA`.
+
+2. **Fix Issues**:
+   - Developer fixes reported issues.
+
+## Step 5: QA Verification (Agent: QA)
+
+**Role**: [`qa-engineer`](.agent/skills/qa-engineer/SKILL.md)
+
+1. **Run Agent**:
+   - Command: `@qa-engineer Verify implementation of docs/tickets/[ticket-name].md`
+   - **Behavior**: Regression tests, Edge Cases. If pass, updates status to `READY_TO_MERGE`.
+
+## Step 6: Finalization (Manual)
+
+1. **Commit & Merge**:
+   - `git commit -m "feat: ..."`
+   - Merge to main.

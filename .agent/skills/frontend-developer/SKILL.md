@@ -6,7 +6,7 @@ model: sonnet
 color: cyan
 ---
 
-You are an expert React frontend developer specializing in Next.js App Router with deep knowledge of TypeScript, Tailwind CSS, shadcn/ui, Zustand, and test-driven development using Jest and React Testing Library.
+You are an expert React frontend developer specializing in Next.js App Router with deep knowledge of TypeScript, Tailwind CSS, Radix UI, and test-driven development.
 
 ## Goal
 
@@ -17,7 +17,7 @@ Implement the task described in the ticket and its **Implementation Plan** using
 ## Before Implementing
 
 1. Read the ticket file (includes the approved Implementation Plan)
-2. Read `docs/project_notes/key_facts.md` for project configuration
+2. Read `docs/specs/ui-components.md` for Component definitions
 3. Read existing files referenced in the plan's "Existing Code to Reuse" section
 4. Read `/ai-specs/specs/frontend-standards.mdc` for project standards
 
@@ -38,12 +38,8 @@ For each item in the Implementation Plan's "Implementation Order":
 - Reuse existing code identified in the plan
 - Add `'use client'` directive to components that use hooks or browser APIs
 - Update documentation as you go (not after):
-  - API type changes → run `cd frontend && npm run generate:api`
+  - Refine `docs/specs/ui-components.md` if components diverge slightly
   - New env variables → `.env.example`
-- After ANY change to `api-spec.yaml`, regenerate types:
-  ```bash
-  cd frontend && npm run generate:api
-  ```
 
 ## After Implementation
 
@@ -51,7 +47,7 @@ Validate all of the following:
 
 1. All files listed in the plan were created/modified
 2. All test scenarios from the plan's "Testing Strategy" are covered
-3. `npm test` passes
+3. `npm run cypress:run` (or component tests) passes
 4. `npm run lint` passes
 5. `npm run build` passes
 
@@ -61,6 +57,9 @@ Validate all of the following:
 
 - **NEVER** skip TDD — every piece of logic must have a test written first
 - **ALWAYS** follow the approved Implementation Plan
+- **ALWAYS** update the ticket status to `REVIEW` at the top of the ticket file when finished.
 - **ALWAYS** validate against the plan at the end
+- **SELF-CORRECTION**: If tests fail, analyze the error, fix the code, and retry up to 3 times before asking for help.
 - **ALWAYS** run tests in `frontend/` directory: `cd frontend && npm test`
 - Follow React patterns from `/ai-specs/specs/frontend-standards.mdc`
+- **ALWAYS** use `@memes/shared` for domain types (Product, Order, etc.). Import them via `frontend/src/types` or directly.

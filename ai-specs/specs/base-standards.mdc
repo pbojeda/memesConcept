@@ -30,7 +30,10 @@ alwaysApply: true
 - **Validation**: **Zod** (Strict schema validation)
 - **Logging**: **Pino**
 - **Payment**: Stripe Node.js SDK
-- **Testing**: Jest (Unit), Supertest (Integration)
+### Shared (`shared/`)
+- **Language**: TypeScript
+- **Validation**: Zod Schemas (Single Source of Truth)
+- **Types**: Shared Interfaces (inferred from Zod)
 
 ## 3. Monorepo Structure
 
@@ -38,6 +41,7 @@ alwaysApply: true
 memes/
 ├── backend/     ← Node/Express/Mongoose
 ├── frontend/    ← Next.js/Tailwind
+├── shared/      ← Shared Zod Schemas & Types
 └── docs/        ← Specs, Plans, Notes
     ├── specs/   ← OpenAPI, UI Specs
     └── planning/ ← implementation_plan.md, task.md
@@ -60,25 +64,20 @@ memes/
 4. **Implement**: Write code to pass tests.
 5. **Verify**: Run full suite.
 
-## 6. Roles & Skills (Agent Personas)
-
-- **Spec-Creator**: Focuses on writing clear, detailed OpenAPI/UI specs.
-- **Code-Reviewer**: Enforces strict TypeScript, Zod schemas, and "No Magic Strings" policy.
-- **QA-Engineer**: Focuses on "Happy Path" and "Edge Case" testing in Cypress/Jest.
-
-## 7. Official Workflows & Skills
+## 6. Official Workflows & Skills
 
 ### Workflows
 - **Spec-Driven Task**: `.agent/workflows/spec-driven-task.md`
-- **Review Specs**: `.agent/workflows/review-specs.md` (Planned)
 
 ### Skills (Agent Personas)
+- **Spec Creator**: `.agent/skills/spec-creator`
 - **Frontend Planner**: `.agent/skills/frontend-planner`
 - **Backend Planner**: `.agent/skills/backend-planner`
 - **Frontend Developer**: `.agent/skills/frontend-developer`
 - **Backend Developer**: `.agent/skills/backend-developer`
 - **Code Review Specialist**: `.agent/skills/code-review-specialist`
+- **QA Engineer**: `.agent/skills/qa-engineer`
 
-## 8. Project Memory
+## 7. Project Memory
 - **`docs/planning/task.md`**: Single source of truth for progress.
 - **`docs/planning/implementation_plan.md`**: Detailed technical roadmap.

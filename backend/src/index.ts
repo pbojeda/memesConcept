@@ -1,27 +1,17 @@
-import express, { Request, Response } from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import pino from 'pino';
-import dotenv from 'dotenv';
+import { app, logger } from './app';
+import { config } from './infrastructure/config';
+import { connectToDatabase } from './infrastructure/database';
 
-dotenv.config();
-
-const app = express();
-const port = process.env.PORT || 3001;
-const logger = pino({
-    transport: {
-        target: 'pino-pretty'
+const start = async () => {
+    try {
+        await connectToDatabase();
+        app.listen(config.PORT, () => {
+            logger.info(`Server running at http://localhost:${config.PORT}`);
+        });
+    } catch (error) {
+        logger.error({ err: error }, 'Failed to start server');
+        process.exit(1);
     }
-});
+};
 
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
-
-app.get('/health', (req: Request, res: Response) => {
-    res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-app.listen(port, () => {
-    logger.info(`Server running at http://localhost:${port}`);
-});
+start();

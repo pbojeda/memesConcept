@@ -6,8 +6,11 @@
             "es2020",
             "dom"
         ],
-        "outDir": "./dist",
-        "rootDir": "./src",
+        "paths": {
+            "@memes/shared": [
+                "../shared/src/index.ts"
+            ]
+        },
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
