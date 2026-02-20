@@ -46,10 +46,12 @@
   - [x] Fixes: Admin List Images, Delete Modal, Variants on Store, Stripe Integration <!-- id: 40 -->
 
 - [ ] **Deployment Analysis & Verification**
-  - [x] Analyze Deployment Options (Vercel, VPS, etc.) <!-- id: 28 -->
-  - [x] Ticket: [MVP-05-final-polish.md](docs/tickets/MVP-05-final-polish.md) <!-- id: 34 -->
-  - [ ] Install & Configure Cypress <!-- id: 35 -->
-  - [x] Update README.md <!-- id: 36 -->
-  - [x] CI/CD Optimization <!-- id: 37 -->
+  - [x] Analyze Deployment Options (Vercel, VPS, etc.)
+  - [x] Ticket: [MVP-05-final-polish.md](docs/tickets/MVP-05-final-polish.md)
+  - [x] Ticket: [MVP-06-db-retry.md](docs/tickets/MVP-06-db-retry.md) (Database Resilience)
+  - [ ] Implement MongoDB Retry Policy (Initial Connection)
+  - [ ] Install & Configure Cypress
+  - [x] Update README.md
+  - [x] CI/CD Optimization
   - [x] Configure Build/Deploy artifacts (Dockerfile for Render Backend)
-  - [ ] Final Deployment (Vercel/Render) <!-- id: 38 -->
+  - [ ] Final Deployment (Vercel/Render)

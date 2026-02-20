@@ -108,6 +108,8 @@ Monorepo structure with independent `backend` and `frontend` folders.
   - [x] **Frontend**: Setup code for Vercel deployment.
   - [x] **Backend**: Created Dockerfile in `backend/` for Render deployment (handling monorepo context via Root).
   - [x] **Fixes**: Corrected image aspect ratios natively and resolved state synchronization bugs in `<VariantSelector/>`.
+  - [x] Ticket: [MVP-06-db-retry.md](docs/tickets/MVP-06-db-retry.md) created for Database Retry Policies.
+  - [ ] Implement DB Connection Retries in `backend/src/infrastructure/database.ts`.
   - [ ] **Verify**: Production Smoke Test.
 
 ### 9. Missing MVP Analysis
