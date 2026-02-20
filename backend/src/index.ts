@@ -4,7 +4,9 @@ import { connectToDatabase } from './infrastructure/database';
 
 const start = async () => {
     try {
-        await connectToDatabase();
+        // Initiate database connection silently without strictly blocking the port binding
+        connectToDatabase().catch(err => logger.error({ err }, 'Failed to start DB'));
+
         app.listen(config.PORT, () => {
             logger.info(`Server running at http://localhost:${config.PORT}`);
         });

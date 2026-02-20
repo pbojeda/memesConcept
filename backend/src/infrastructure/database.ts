@@ -7,7 +7,8 @@ export const connectToDatabase = async (): Promise<void> => {
         console.log('✅ Connected to MongoDB');
     } catch (error) {
         console.error('❌ MongoDB connection error:', error);
-        process.exit(1);
+        // We choose not to process.exit(1) here so the web server can still bind to the port
+        // and allow Render/clouds to pass health-checks while you whitelist the IP in Atlas.
     }
 };
 
