@@ -18,7 +18,12 @@ export class CheckoutService {
         try {
             const variantLabel = [data.variant?.size, data.variant?.color].filter(Boolean).join(' - ');
             const displayDescription = variantLabel ? `Variant: ${variantLabel}` : undefined;
-            const images = (product.images?.length > 0 ? product.images : (product.imageUrl ? [product.imageUrl] : []));
+            // Ensure images passed to Stripe are valid HTTP URLs and under 2048 chars.
+            // Old database seeds or mock items might be using base64 'data:image/' which Stripe rejects.
+            const rawImages = (product.images?.length > 0 ? product.images : (product.imageUrl ? [product.imageUrl] : []));
+            const validImages = rawImages.filter(url =>
+                url && typeof url === 'string' && url.length < 2000 && url.startsWith('http')
+            );
 
             // Create Stripe Session
             const session = await stripe.checkout.sessions.create({
@@ -30,7 +35,7 @@ export class CheckoutService {
                             product_data: {
                                 name: product.name,
                                 description: displayDescription,
-                                images: images,
+                                images: validImages.length > 0 ? validImages : undefined,
                                 metadata: {
                                     productId: product.id,
                                     variant: JSON.stringify(data.variant)
