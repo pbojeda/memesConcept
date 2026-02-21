@@ -40,10 +40,13 @@
   - [x] Feature: Cookie Banner <!-- id: 27 -->
 
 - [ ] **Admin & Cloudinary**
-  - [/] Ticket: [MVP-04-admin-dashboard.md](docs/tickets/MVP-04-admin-dashboard.md) <!-- id: 31 -->
-  - [x] Backend: Cloudinary & CRUD <!-- id: 32 -->
-  - [x] Frontend: Admin Dashboard & Upload (Implemented) <!-- id: 33 -->
-  - [x] Fixes: Admin List Images, Delete Modal, Variants on Store, Stripe Integration <!-- id: 40 -->
+  - [/] Ticket: [MVP-04-admin-dashboard.md](docs/tickets/MVP-04-admin-dashboard.md)
+  - [x] Backend: Cloudinary & CRUD
+  - [x] Frontend: Admin Dashboard & Upload (Implemented)
+  - [x] Fixes: Admin List Images, Delete Modal, Variants on Store, Stripe Integration
+  - [x] Ticket: [MVP-07-image-upload-refactor.md](docs/tickets/MVP-07-image-upload-refactor.md) (Tech Debt: Multipart Uploads)
+  - [x] Backend: Multer & Cloudinary Streams
+  - [x] Frontend: Refactor `ImageUpload` component
 
 - [ ] **Deployment Analysis & Verification**
   - [x] Analyze Deployment Options (Vercel, VPS, etc.)

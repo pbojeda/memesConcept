@@ -10,17 +10,16 @@ cloudinary.config({
 });
 
 export class CloudinaryService {
-    static async uploadImage(imagePath: string): Promise<string> {
-        const result = await cloudinary.uploader.upload(imagePath, {
-            folder: 'memes-store/products'
+    static uploadBuffer(buffer: Buffer): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { folder: 'memes-store/products' },
+                (error, result) => {
+                    if (error) return reject(error);
+                    if (result) resolve(result.secure_url);
+                }
+            );
+            stream.end(buffer);
         });
-        return result.secure_url;
-    }
-
-    static async uploadBase64(base64String: string): Promise<string> {
-        const result = await cloudinary.uploader.upload(base64String, {
-            folder: 'memes-store/products'
-        });
-        return result.secure_url;
     }
 }

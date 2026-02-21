@@ -86,9 +86,11 @@ Monorepo structure with independent `backend` and `frontend` folders.
   - [ ] Create `shared/` with Zod schemas.
   - [ ] Link `shared` to Frontend/Backend via tsconfig paths.
   - [ ] Refactor `Product` types to use Shared Zod Schema.
+  - [ ] Update `ProductSchema` to reject massive strings/Base64 and strictly enforce `max(2000)` and `url()`.
 - [ ] **Backend**:
-  - [ ] **Cloudinary**: Setup `cloudinary` SDK and `uploadString` / `uploadStream`.
-  - [ ] **Endpoints**: `POST /products` (Auth required?), `PUT /products/:id`, `DELETE /products/:id`.
+  - [x] **Cloudinary**: Setup `cloudinary` SDK.
+  - [x] **Cloudinary Fix**: Implement `multer` and transition to `upload_stream` for Multipart binary form uploads instead of base64 processing (MVP-07).
+  - [ ] **Endpoints**: `POST /products`, `PUT /products/:id`, `DELETE /products/:id`, `POST /upload`.
   - [ ] **Auth**: Simple Admin Middleware (e.g., Hardcoded secret header or Basic Auth for MVP).
   - [/] **Frontend**:
     -   [x] **Admin Page**: `/admin/products`.

@@ -79,12 +79,11 @@ export class AdminProductController {
 
     static async uploadImage(req: Request, res: Response) {
         try {
-            const { image } = req.body;
-            if (!image) {
-                res.status(400).json({ error: 'Image is required (base64)' });
+            if (!req.file) {
+                res.status(400).json({ error: 'Image file is required' });
                 return;
             }
-            const url = await CloudinaryService.uploadBase64(image);
+            const url = await CloudinaryService.uploadBuffer(req.file.buffer);
             res.status(200).json({ url });
         } catch (error) {
             console.error(error);

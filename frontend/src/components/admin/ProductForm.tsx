@@ -20,6 +20,7 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
     const router = useRouter();
     const queryClient = useQueryClient(); // Add queryClient hook
     const [isLoading, setIsLoading] = useState(false);
+    const [isImageUploading, setIsImageUploading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const form = useForm({
@@ -147,6 +148,8 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
                 <ImageUpload
                     onImageSelected={handleImageSelected}
                     hidePreview={true}
+                    onUploadStart={() => setIsImageUploading(true)}
+                    onUploadEnd={() => setIsImageUploading(false)}
                 />
                 <div className="flex gap-2 mt-2 flex-wrap">
                     {(form.watch('images') || []).map((img: string, idx: number) => (
@@ -167,8 +170,8 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
                 </div>
             </div>
 
-            <Button type="submit" disabled={isLoading} className="w-full">
-                {isLoading ? 'Saving...' : (isEdit ? 'Update Product' : 'Create Product')}
+            <Button type="submit" disabled={isLoading || isImageUploading} className="w-full">
+                {isLoading ? 'Saving...' : (isImageUploading ? 'Uploading Please Wait...' : (isEdit ? 'Update Product' : 'Create Product'))}
             </Button>
         </form>
     );

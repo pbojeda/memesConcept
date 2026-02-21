@@ -33,5 +33,21 @@ export const adminApi = {
 
     deleteProduct: async (id: string) => {
         await api.delete(`/${id}`);
+    },
+
+    uploadImage: async (file: File): Promise<string> => {
+        const formData = new FormData();
+        formData.append('image', file);
+        // We use native fetch to avoid axios overriding the boundary needed for multipart
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/products/upload`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'x-admin-key': process.env.NEXT_PUBLIC_ADMIN_API_KEY || ''
+            }
+        });
+        if (!response.ok) throw new Error('Failed to upload image');
+        const data = await response.json();
+        return data.url;
     }
 };
