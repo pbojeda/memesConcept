@@ -52,9 +52,9 @@
   - [x] Analyze Deployment Options (Vercel, VPS, etc.)
   - [x] Ticket: [MVP-05-final-polish.md](docs/tickets/MVP-05-final-polish.md)
   - [x] Ticket: [MVP-06-db-retry.md](docs/tickets/MVP-06-db-retry.md) (Database Resilience)
-  - [ ] Implement MongoDB Retry Policy (Initial Connection)
-  - [ ] Install & Configure Cypress
+  - [x] Implement MongoDB Retry Policy (Initial Connection)
+  - [x] Install & Configure Cypress
   - [x] Update README.md
   - [x] CI/CD Optimization
   - [x] Configure Build/Deploy artifacts (Dockerfile for Render Backend)
-  - [ ] Final Deployment (Vercel/Render)
+  - [x] Final Deployment (Vercel/Render)
