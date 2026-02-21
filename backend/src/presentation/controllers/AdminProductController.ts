@@ -70,6 +70,13 @@ export class AdminProductController {
                 res.status(404).json({ error: 'Product not found' });
                 return;
             }
+
+            // Cleanup orphaned images
+            const imagesToDelete = product.images && product.images.length > 0 ? product.images : (product.imageUrl ? [product.imageUrl] : []);
+            for (const url of imagesToDelete) {
+                await CloudinaryService.deleteImage(url);
+            }
+
             res.sendStatus(204);
         } catch (error) {
             console.error(error);
