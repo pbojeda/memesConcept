@@ -28,23 +28,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
                 type: "website",
             },
         };
-    } catch (e) {
+    } catch {
         return { title: "Error" };
     }
 }
 
 export default async function ProductPage({ params }: PageProps) {
     const { slug } = await params;
+    let product;
     try {
-        const product = await productService.getBySlugOrId(slug);
-
-        if (!product) {
-            notFound();
-        }
-
-        return <ProductDetailClient product={product} />;
+        product = await productService.getBySlugOrId(slug);
     } catch (error) {
         console.error("Failed to fetch product", error);
+    }
+
+    if (!product) {
         notFound();
     }
+
+    return <ProductDetailClient product={product} />;
 }

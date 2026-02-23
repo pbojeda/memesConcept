@@ -13,6 +13,7 @@ export function ProductImage({ product, alt, className }: ProductImageProps) {
     const src = product.images?.[0] || product.imageUrl || '/placeholder-image.png'; // Add a placemolder eventually
 
     return (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
             src={src}
             alt={alt || product.name}

@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { productService } from "../services/product.service";
 import { ProductImage } from "../components/ProductImage";
+import { Product } from "@/schemas/product";
 
 export default async function HomePage() {
   // Fetch products to list them
-  let products: any[] = [];
+  let products: Product[] = [];
   try {
     const data = await productService.getAll();
     if (Array.isArray(data)) {

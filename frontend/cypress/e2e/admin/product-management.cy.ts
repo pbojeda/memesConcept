@@ -1,7 +1,5 @@
 
 describe('Admin Dashboard', () => {
-    const adminKey = 'secret-key'; // From env
-
     beforeEach(() => {
         // Mock Admin API interactions
         cy.intercept('GET', '/api/admin/products*', (req) => {

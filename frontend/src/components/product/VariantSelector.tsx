@@ -25,6 +25,7 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Variant
     // Sync with external selectedVariant if it changes unexpectedly
     useEffect(() => {
         if (selectedVariant) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setSelectedSize(selectedVariant.size);
             setSelectedColor(selectedVariant.color);
         }
