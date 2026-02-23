@@ -25,7 +25,7 @@
 - [x] **Frontend Implementation**
   - [x] Ticket: [MVP-02-frontend-implementation.md](docs/tickets/MVP-02-frontend-implementation.md) <!-- id: 12 -->
   - [x] Implement Product Detail Page (Primary Landing) <!-- id: 13 -->
-  - [ ] Bug: [BUG-01-image-host-config.md](docs/bugs/BUG-01-image-host-config.md) <!-- id: 21 -->
+  - [x] Bug: [BUG-01-image-host-config.md](docs/bugs/BUG-01-image-host-config.md) <!-- id: 21 -->
   - [x] Implement Checkout Flow (Stripe) <!-- id: 14 -->
   - [x] Implement Order Confirmation Page <!-- id: 15 -->
   - [x] Implement Product List Page (Secondary) <!-- id: 16 -->
