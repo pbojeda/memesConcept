@@ -39,8 +39,8 @@
   - [x] Feature: Footer & Legal Pages <!-- id: 26 -->
   - [x] Feature: Cookie Banner <!-- id: 27 -->
 
-- [ ] **Admin & Cloudinary**
-  - [/] Ticket: [MVP-04-admin-dashboard.md](docs/tickets/MVP-04-admin-dashboard.md)
+- [x] **Admin & Cloudinary**
+  - [x] Ticket: [MVP-04-admin-dashboard.md](docs/tickets/MVP-04-admin-dashboard.md)
   - [x] Backend: Cloudinary & CRUD
   - [x] Frontend: Admin Dashboard & Upload (Implemented)
   - [x] Fixes: Admin List Images, Delete Modal, Variants on Store, Stripe Integration
