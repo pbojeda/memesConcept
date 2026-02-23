@@ -16,9 +16,6 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
     const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
         product.variants[0] || null
     );
-    const [currentImage, setCurrentImage] = useState<string>(
-        product.imageUrl || "/placeholder.jpg"
-    );
     const [clientSecret, setClientSecret] = useState<string | null>(null);
 
     return (

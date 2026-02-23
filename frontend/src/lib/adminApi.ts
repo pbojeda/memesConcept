@@ -21,12 +21,12 @@ export const adminApi = {
         return response.data;
     },
 
-    createProduct: async (data: any) => {
+    createProduct: async (data: Partial<Product>) => {
         const response = await api.post<Product>('/', data);
         return response.data;
     },
 
-    updateProduct: async (id: string, data: any) => {
+    updateProduct: async (id: string, data: Partial<Product>) => {
         const response = await api.put<Product>(`/${id}`, data);
         return response.data;
     },

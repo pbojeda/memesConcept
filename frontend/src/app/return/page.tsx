@@ -3,6 +3,8 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
+import Link from "next/link";
+
 function ReturnContent() {
     const searchParams = useSearchParams();
     const sessionId = searchParams.get("session_id");
@@ -11,8 +13,8 @@ function ReturnContent() {
         return (
             <div className="text-center p-12">
                 <h1 className="text-2xl font-bold text-red-600">Invalid Session</h1>
-                <p className="mt-2 text-gray-600">We couldn't retrieve your order details.</p>
-                <a href="/" className="mt-6 inline-block px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800 transition-colors">Return to Home</a>
+                <p className="mt-2 text-gray-600">We couldn&apos;t retrieve your order details.</p>
+                <Link href="/" className="mt-6 inline-block px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800 transition-colors">Return to Home</Link>
             </div>
         );
     }
@@ -37,9 +39,9 @@ function ReturnContent() {
                     We will send a confirmation email with your order details shortly.
                 </p>
 
-                <a href="/" className="block w-full py-3 px-4 bg-black text-white text-center rounded-lg font-medium hover:bg-gray-800 transition-transform active:scale-95">
+                <Link href="/" className="block w-full py-3 px-4 bg-black text-white text-center rounded-lg font-medium hover:bg-gray-800 transition-transform active:scale-95">
                     Continue Shopping
-                </a>
+                </Link>
             </div>
         </div>
     );

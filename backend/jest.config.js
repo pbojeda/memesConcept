@@ -6,4 +6,8 @@ module.exports = {
     transform: {
         '^.+\\.tsx?$': 'ts-jest',
     },
+    moduleNameMapper: {
+        '^@memes/shared$': '<rootDir>/../shared/src/index.ts',
+    },
+    setupFiles: ['<rootDir>/tests/setupEnv.ts'],
 };

@@ -39,8 +39,8 @@
   - [x] Feature: Footer & Legal Pages <!-- id: 26 -->
   - [x] Feature: Cookie Banner <!-- id: 27 -->
 
-- [ ] **Admin & Cloudinary**
-  - [/] Ticket: [MVP-04-admin-dashboard.md](docs/tickets/MVP-04-admin-dashboard.md)
+- [x] **Admin & Cloudinary**
+  - [x] Ticket: [MVP-04-admin-dashboard.md](docs/tickets/MVP-04-admin-dashboard.md)
   - [x] Backend: Cloudinary & CRUD
   - [x] Frontend: Admin Dashboard & Upload (Implemented)
   - [x] Fixes: Admin List Images, Delete Modal, Variants on Store, Stripe Integration
@@ -52,9 +52,9 @@
   - [x] Analyze Deployment Options (Vercel, VPS, etc.)
   - [x] Ticket: [MVP-05-final-polish.md](docs/tickets/MVP-05-final-polish.md)
   - [x] Ticket: [MVP-06-db-retry.md](docs/tickets/MVP-06-db-retry.md) (Database Resilience)
-  - [ ] Implement MongoDB Retry Policy (Initial Connection)
-  - [ ] Install & Configure Cypress
+  - [x] Implement MongoDB Retry Policy (Initial Connection)
+  - [x] Install & Configure Cypress
   - [x] Update README.md
   - [x] CI/CD Optimization
   - [x] Configure Build/Deploy artifacts (Dockerfile for Render Backend)
-  - [ ] Final Deployment (Vercel/Render)
+  - [x] Final Deployment (Vercel/Render)

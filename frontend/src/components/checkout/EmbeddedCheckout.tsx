@@ -5,7 +5,6 @@ import {
     EmbeddedCheckoutProvider,
     EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
-import { useCallback } from "react";
 
 // Initializing stripe outside component to avoid recreation
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
