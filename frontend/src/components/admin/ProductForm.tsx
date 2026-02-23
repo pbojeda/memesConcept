@@ -12,7 +12,6 @@ import { ImageUpload } from './ImageUpload';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { adminApi } from '@/lib/adminApi';
-import { z } from 'zod';
 import { Trash2, Plus } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -37,16 +36,16 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
 
     const { fields, append, remove } = useFieldArray({
         control: form.control,
-        name: "variants" as any
+        name: "variants" as const
     });
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = async (data: Partial<Product>) => {
         setIsLoading(true);
         setError(null);
 
         // Auto-generate slug if empty
         if (!data.slug) {
-            data.slug = data.name
+            data.slug = (data.name || "")
                 .toLowerCase()
                 .trim()
                 .replace(/[^\w\s-]/g, '')
@@ -66,9 +65,10 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
 
             router.push('/admin/products');
             router.refresh();
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error(err);
-            setError(err.response?.data?.message || err.message || 'Something went wrong');
+            const e = err as { response?: { data?: { message?: string } }, message?: string };
+            setError(e.response?.data?.message || e.message || 'Something went wrong');
         } finally {
             setIsLoading(false);
         }
@@ -126,15 +126,15 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
                     <div key={field.id} className="flex gap-2 items-end bg-white p-2 rounded border">
                         <div className="flex-1">
                             <Label className="text-xs text-gray-500">Size</Label>
-                            <Input {...form.register(`variants.${index}.size` as any)} placeholder="S, M, L" className="h-8" />
+                            <Input {...form.register(`variants.${index}.size` as "variants.0.size")} placeholder="S, M, L" className="h-8" />
                         </div>
                         <div className="flex-1">
                             <Label className="text-xs text-gray-500">Color</Label>
-                            <Input {...form.register(`variants.${index}.color` as any)} placeholder="Red, Blue" className="h-8" />
+                            <Input {...form.register(`variants.${index}.color` as "variants.0.color")} placeholder="Red, Blue" className="h-8" />
                         </div>
                         <div className="w-24">
                             <Label className="text-xs text-gray-500">Stock</Label>
-                            <Input type="number" {...form.register(`variants.${index}.stock` as any, { valueAsNumber: true })} className="h-8" />
+                            <Input type="number" {...form.register(`variants.${index}.stock` as "variants.0.stock", { valueAsNumber: true })} className="h-8" />
                         </div>
                         <Button type="button" variant="destructive" size="icon" className="h-8 w-8" onClick={() => remove(index)}>
                             <Trash2 className="w-4 h-4" />
@@ -154,11 +154,12 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
                 <div className="flex gap-2 mt-2 flex-wrap">
                     {(form.watch('images') || []).map((img: string, idx: number) => (
                         <div key={idx} className="relative group">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={img} alt={`Product ${idx}`} className="w-20 h-20 object-cover rounded border" />
                             <button
                                 type="button"
                                 onClick={() => {
-                                    const newImages = form.getValues('images')?.filter((_: any, i: number) => i !== idx);
+                                    const newImages = form.getValues('images')?.filter((_: string, i: number) => i !== idx);
                                     form.setValue('images', newImages || []);
                                 }}
                                 className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"

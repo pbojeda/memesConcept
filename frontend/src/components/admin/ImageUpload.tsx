@@ -49,6 +49,7 @@ export function ImageUpload({ onImageSelected, currentImage, hidePreview = false
         <div className="space-y-2">
             {!hidePreview && preview && (
                 <div className="mb-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={preview}
                         alt="Preview"

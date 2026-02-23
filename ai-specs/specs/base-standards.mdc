@@ -64,6 +64,13 @@ memes/
 4. **Implement**: Write code to pass tests.
 5. **Verify**: Run full suite.
 
+### Workflow Execution & Communication Style
+To maintain consistency, all AI agents MUST adhere to this exact execution pattern:
+1. **Acknowledge & Plan**: Clearly state what sub-task you are tackling, mentioning the specific branch if applicable.
+2. **Execute (Step-by-Step)**: Make the changes transparently.
+3. **Explain via Context**: In your reply, detail exactly *what* was done, mentioning the specific files modified, relevant code snippets, and the *rationale* behind those decisions.
+4. **Verify & Gate**: End your response by confirming the current state and explicitly asking the user for authorization before switching topics, making commits, or pushing code.
+
 ## 6. Official Workflows & Skills
 
 ### Workflows
@@ -81,3 +88,31 @@ memes/
 ## 7. Project Memory
 - **`docs/planning/task.md`**: Single source of truth for progress.
 - **`docs/planning/implementation_plan.md`**: Detailed technical roadmap.
+
+## 8. Git & CI/CD Strategy
+
+### Branching Model (Git Flow)
+To maintain a professional SDD process, we strictly adhere to a Git Flow branching strategy:
+
+- **`main`**: **Production branch**. Always stable and deployable. Never merge directly; requires a Pull Request (PR) from `develop` or a `release/*` branch.
+- **`develop`**: **Integration branch**. The primary channel where all completed features and bugfixes are merged. Always deployable to a *Staging* environment.
+- **`feature/<name>`**: **Feature branches**. Branched off from `develop`. Once the feature is thoroughly tested and spec-compliant, a PR is opened against `develop`.
+- **`bugfix/<name>`**: **Bug branches**. Used to resolve issues found in `develop`. Similar to feature branches, they are merged back into `develop`.
+- **`release/<version>`**: **Release branches**. Branched off from `develop` when preparing for production. Used for final polishing and minor fixes before merging into BOTH `main` (for deployment) and `develop` (to prevent regression).
+
+### CI/CD Pipeline Triggers
+Our automated pipelines (GitHub Actions) run different jobs based on GitHub branch context:
+
+1. **Test on Push (`feature/*`, `bugfix/*`, `release/*`, `develop`, `main`)**
+   - Lints the code.
+   - Builds the application.
+   - Runs unit tests and basic automated QA.
+   - **Goal:** Provide instant feedback to the developer on whether their isolated code works.
+
+2. **Pre-Merge Validation (Pull Requests against `develop` or `main`)**
+   - Redundantly ensures tests run for the exact merge commit.
+   - Requires ALL tests to pass before the "Merge" button is unlocked (Branch Protection).
+
+3. **Deploy (Handled by Render/Vercel)**
+   - Merges/Pushes to `develop` trigger automatic deployments to the Staging server.
+   - Merges to `main` trigger automatic deployments to the Production application.
