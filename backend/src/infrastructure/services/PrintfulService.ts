@@ -80,6 +80,28 @@ export class PrintfulService {
     }
 
     /**
+     * Updates an existing Sync Product in Printful.
+     */
+    static async updateSyncProduct(id: number, data: { sync_product: { name: string; thumbnail?: string } }) {
+        if (!config.PRINTFUL_API_KEY) {
+            return null;
+        }
+
+        const response = await fetch(`${this.BASE_URL}/store/products/${id}`, {
+            method: 'PUT',
+            headers: this.headers,
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Printful Product Update Error: ${response.status}`);
+        }
+
+        const result = await response.json() as any;
+        return result.result;
+    }
+
+    /**
      * Gets a detailed Sync Product from Printful including sync_variants.
      */
     static async getSyncProduct(id: number) {
@@ -93,6 +115,26 @@ export class PrintfulService {
 
         if (!response.ok) {
             throw new Error(`Printful Product Fetch Error: ${response.status}`);
+        }
+
+        const result = await response.json() as any;
+        return result.result;
+    }
+
+    /**
+     * Deletes a Sync Product from Printful.
+     */
+    static async deleteSyncProduct(id: number) {
+        if (!config.PRINTFUL_API_KEY) {
+            return null;
+        }
+        const response = await fetch(`${this.BASE_URL}/store/products/${id}`, {
+            method: 'DELETE',
+            headers: this.headers
+        });
+
+        if (!response.ok) {
+            throw new Error(`Printful Product Delete Error: ${response.status}`);
         }
 
         const result = await response.json() as any;

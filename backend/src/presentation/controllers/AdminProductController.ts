@@ -91,6 +91,20 @@ export class AdminProductController {
                 return;
             }
 
+            if (product.printfulSyncProductId && (updateData.name || updateData.images)) {
+                try {
+                    await PrintfulService.updateSyncProduct(product.printfulSyncProductId, {
+                        sync_product: {
+                            name: product.name,
+                            thumbnail: product.images?.[0]
+                        }
+                    });
+                    logger.info(`Updated associated Printful Sync Product: ${product.printfulSyncProductId}`);
+                } catch (pfError) {
+                    logger.warn({ err: pfError }, "Failed to update Sync Product in Printful, ignoring.");
+                }
+            }
+
             res.status(200).json(product);
         } catch (error) {
             if (error instanceof z.ZodError) {
@@ -109,6 +123,15 @@ export class AdminProductController {
             if (!product) {
                 res.status(404).json({ error: 'Product not found' });
                 return;
+            }
+
+            if (product.printfulSyncProductId) {
+                try {
+                    await PrintfulService.deleteSyncProduct(product.printfulSyncProductId);
+                    logger.info(`Deleted associated Printful Sync Product: ${product.printfulSyncProductId}`);
+                } catch (pfError) {
+                    logger.warn({ err: pfError }, "Failed to delete from Printful, ignoring.");
+                }
             }
 
             // Cleanup orphaned images
