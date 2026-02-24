@@ -15,6 +15,7 @@ const envSchema = z.object({
     CLOUDINARY_API_KEY: z.string().optional(),
     CLOUDINARY_API_SECRET: z.string().optional(),
     PRINTFUL_API_KEY: z.string().optional(), // Optional initially to avoid breaking tests/CI that don't have it yet. Make required later.
+    PRINTFUL_STORE_ID: z.string().optional(), // Required if the account has Multiple Stores or a specific Store Token behavior
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

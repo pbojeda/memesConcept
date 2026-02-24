@@ -7,42 +7,7 @@ servers:
   - url: http://localhost:3001
     description: Local Development Server
 
-  /webhook/stripe:
-    post:
-      summary: Handle Stripe Webhooks
-      description: Receives events from Stripe (e.g., payment_intent.succeeded)
-      responses:
-        '200':
-          description: Webhook received
-
-  /admin/products/upload:
-    post:
-      summary: Upload an image to Cloudinary (Base64)
-      operationId: uploadImage
-      security:
-        - AdminAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                image:
-                  type: string
-                  description: Base64 encoded image string
-      responses:
-        '200':
-          description: Image uploaded successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  url:
-                    type: string
-        '500':
-          description: Upload failed
-
+paths:
   /products:
     get:
       summary: List all products
@@ -145,6 +110,66 @@ servers:
         '204':
           description: Product deleted
 
+  /admin/products/upload:
+    post:
+      summary: Upload an image to Cloudinary (Base64)
+      operationId: uploadImage
+      security:
+        - AdminAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  description: Base64 encoded image string
+      responses:
+        '200':
+          description: Image uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+        '500':
+          description: Upload failed
+
+  /checkout:
+    post:
+      summary: Create a Stripe Checkout Session
+      operationId: createCheckoutSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckoutSessionRequest'
+      responses:
+        '200':
+          description: Checkout session created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckoutSessionResponse'
+        '400':
+          description: Invalid input or stock issues
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /webhook/stripe:
+    post:
+      summary: Handle Stripe Webhooks
+      description: Receives events from Stripe (e.g., payment_intent.succeeded)
+      responses:
+        '200':
+          description: Webhook received
+
 components:
   securitySchemes:
     AdminAuth:
@@ -230,74 +255,3 @@ components:
           type: string
         code:
           type: string
-
-paths:
-  /products:
-    get:
-      summary: List all products
-      operationId: listProducts
-      responses:
-        '200':
-          description: A list of products
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Product'
-
-  /products/{id}:
-    get:
-      summary: Get a product by ID or Slug
-      operationId: getProduct
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Product details
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Product'
-        '404':
-          description: Product not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /checkout:
-    post:
-      summary: Create a Stripe Checkout Session
-      operationId: createCheckoutSession
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CheckoutSessionRequest'
-      responses:
-        '200':
-          description: Checkout session created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CheckoutSessionResponse'
-        '400':
-          description: Invalid input or stock issues
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /webhook/stripe:
-    post:
-      summary: Handle Stripe Webhooks
-      description: Receives events from Stripe (e.g., payment_intent.succeeded)
-      responses:
-        '200':
-          description: Webhook received

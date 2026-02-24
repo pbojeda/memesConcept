@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import { config } from '../config';
+import { logger } from '../../app';
 
 interface PrintfulCreateProductData {
     sync_product: {
@@ -40,12 +41,13 @@ export class PrintfulService {
 
     private static get headers() {
         if (!config.PRINTFUL_API_KEY) {
-            console.warn("⚠️ PRINTFUL_API_KEY is not set. Printful integration will fail.");
+            logger.warn("⚠️ PRINTFUL_API_KEY is not set. Printful integration will fail.");
         }
         return {
             'Authorization': `Bearer ${config.PRINTFUL_API_KEY}`,
             'Content-Type': 'application/json',
-            'X-PF-Language': 'en' // Important to avoid weird parsing errors
+            'X-PF-Language': 'en', // Important to avoid weird parsing errors
+            ...(config.PRINTFUL_STORE_ID && { 'X-PF-Store-Id': config.PRINTFUL_STORE_ID })
         };
     }
 
@@ -54,7 +56,7 @@ export class PrintfulService {
      */
     static async createSyncProduct(data: PrintfulCreateProductData) {
         if (!config.PRINTFUL_API_KEY) {
-            console.warn("Skipping Printful API call because PRINTFUL_API_KEY is null.");
+            logger.warn("Skipping Printful API call because PRINTFUL_API_KEY is null.");
             // Return placeholder for tests/dev to not crash if missing api key
             return {
                 id: Math.floor(Math.random() * 100000),
@@ -78,11 +80,31 @@ export class PrintfulService {
     }
 
     /**
+     * Gets a detailed Sync Product from Printful including sync_variants.
+     */
+    static async getSyncProduct(id: number) {
+        if (!config.PRINTFUL_API_KEY) {
+            return null;
+        }
+        const response = await fetch(`${this.BASE_URL}/store/products/${id}`, {
+            method: 'GET',
+            headers: this.headers
+        });
+
+        if (!response.ok) {
+            throw new Error(`Printful Product Fetch Error: ${response.status}`);
+        }
+
+        const result = await response.json() as any;
+        return result.result;
+    }
+
+    /**
      * Dispatches an order directly to Printful's system.
      */
     static async createOrder(orderData: PrintfulOrderData) {
         if (!config.PRINTFUL_API_KEY) {
-            console.warn("Skipping Printful API call because PRINTFUL_API_KEY is null.");
+            logger.warn("Skipping Printful API call because PRINTFUL_API_KEY is null.");
             return { id: "mock_order_123" };
         }
 

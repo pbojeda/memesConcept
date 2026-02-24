@@ -4,6 +4,7 @@ import { config } from '../../infrastructure/config';
 import { Order } from '../../domain/models/Order';
 import { Product } from '../../domain/models/Product';
 import { PrintfulService } from '../../infrastructure/services/PrintfulService';
+import { logger } from '../../app';
 
 export class WebhookController {
     async handleStripeWebhook(req: Request, res: Response): Promise<void> {
@@ -19,12 +20,13 @@ export class WebhookController {
                 config.STRIPE_WEBHOOK_SECRET
             );
         } catch (err: any) {
-            console.error(`⚠️  Webhook signature verification failed.`, err.message);
+            logger.warn({ err }, `⚠️  Webhook signature verification failed.`);
             res.status(400).send(`Webhook Error: ${err.message}`);
             return;
         }
 
         // Handle the event
+        logger.info(`🔔 Received Stripe Webhook Event: ${event.type}`);
         switch (event.type) {
             case 'checkout.session.completed':
                 // Cast event.data.object to Stripe Session type if needed, but for MVP implicit works or we can type it roughly
@@ -32,8 +34,7 @@ export class WebhookController {
                 await WebhookController.handleCheckoutSessionCompleted(session);
                 break;
             default:
-            // Unexpected event type
-            // console.log(`Unhandled event type ${event.type}`);
+                logger.info(`🤷‍♂️ Unhandled Stripe event type: ${event.type}`);
         }
 
         // Return a 200 response to acknowledge receipt of the event
@@ -52,7 +53,7 @@ export class WebhookController {
                 },
                 { new: true }
             );
-            console.log(`✅ Order paid: ${session.id}`);
+            logger.info(`✅ Order paid: ${session.id}`);
 
             if (order && order.status === 'paid' && session.customer_details?.address) {
                 try {
@@ -61,6 +62,11 @@ export class WebhookController {
                     const selectedVariant = product?.variants.find(
                         (v) => v.size === order.variant?.size && v.color === order.variant?.color
                     );
+
+                    if (!selectedVariant || !selectedVariant.printfulVariantId) {
+                        logger.warn(`Order ${order.id} paid but no Printful sync_variant_id mapped. Needs manual fulfillment.`);
+                        return; // Exit early, we cannot send this to Printful
+                    }
 
                     // Map Stripe Customer details to Printful Order Format
                     const address = session.customer_details.address;
@@ -80,18 +86,17 @@ export class WebhookController {
                         },
                         items: [
                             {
-                                // We use either the exact printful mapping if available, or a fallback (4012 = Basic T-Shirt) if MVP automated
-                                sync_variant_id: selectedVariant?.printfulVariantId || 4012,
+                                sync_variant_id: selectedVariant.printfulVariantId,
                                 quantity: order.quantity,
                                 retail_price: ((order.amountTotal || 0) / 100).toString()
                             }
                         ]
                     });
 
-                    console.log(`🚀 Successfully Dispatched to Printful: ${pfOrder.id}`);
+                    logger.info(`🚀 Successfully Dispatched to Printful: ${pfOrder.id}`);
 
                 } catch (pfError) {
-                    console.error("❌ Printful Dispatch Failed:", pfError);
+                    logger.error({ err: pfError }, "❌ Printful Dispatch Failed");
                     // Order is saved as Paid in our DB, we could trigger an alert email to Admin manually handle it
                 }
             }

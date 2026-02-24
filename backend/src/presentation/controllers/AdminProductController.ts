@@ -1,10 +1,10 @@
-
 import { Request, Response } from 'express';
 import { Product } from '../../domain/models/Product';
 import { z } from 'zod';
 import { CloudinaryService } from '../../infrastructure/services/CloudinaryService';
 import { PrintfulService } from '../../infrastructure/services/PrintfulService';
 import { ProductSchema, CreateProductSchema } from '@memes/shared';
+import { logger } from '../../app';
 
 export class AdminProductController {
     static async createProduct(req: Request, res: Response) {
@@ -38,16 +38,19 @@ export class AdminProductController {
                     }))
                 });
 
-                if (pfProduct) {
+                if (pfProduct && pfProduct.id) {
                     printfulSyncProductId = pfProduct.id;
-                    pfProduct.sync_variants.forEach((pfVar: any, i: number) => {
-                        if (updatedVariants[i]) {
-                            updatedVariants[i] = { ...updatedVariants[i], printfulVariantId: pfVar.id };
-                        }
-                    });
+                    const pfFullProduct = await PrintfulService.getSyncProduct(pfProduct.id);
+                    if (pfFullProduct && pfFullProduct.sync_variants) {
+                        pfFullProduct.sync_variants.forEach((pfVar: any, i: number) => {
+                            if (updatedVariants[i]) {
+                                updatedVariants[i] = { ...updatedVariants[i], printfulVariantId: pfVar.id };
+                            }
+                        });
+                    }
                 }
             } catch (pfError) {
-                console.error("Printful sync failed, continuing without linking:", pfError);
+                logger.warn({ err: pfError }, "Printful sync failed, continuing without linking");
                 // We choose to continue and create the local product even if Printful sync fails for MVP resilience.
             }
 
@@ -62,7 +65,7 @@ export class AdminProductController {
             if (error instanceof z.ZodError) {
                 res.status(400).json({ errors: error.issues });
             } else {
-                console.error(error);
+                logger.error({ err: error }, 'Internal Server Error in createProduct');
                 res.status(500).json({ error: 'Internal Server Error' });
             }
         }
@@ -93,7 +96,7 @@ export class AdminProductController {
             if (error instanceof z.ZodError) {
                 res.status(400).json({ errors: error.issues });
             } else {
-                console.error(error);
+                logger.error({ err: error }, 'Internal Server Error in updateProduct');
                 res.status(500).json({ error: 'Internal Server Error' });
             }
         }
@@ -116,7 +119,7 @@ export class AdminProductController {
 
             res.sendStatus(204);
         } catch (error) {
-            console.error(error);
+            logger.error({ err: error }, 'Internal Server Error in deleteProduct');
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
@@ -130,7 +133,7 @@ export class AdminProductController {
             const url = await CloudinaryService.uploadBuffer(req.file.buffer);
             res.status(200).json({ url });
         } catch (error) {
-            console.error(error);
+            logger.error({ err: error }, 'Upload Failed in uploadImage');
             res.status(500).json({ error: 'Upload Failed' });
         }
     }

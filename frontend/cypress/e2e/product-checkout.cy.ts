@@ -1,7 +1,8 @@
+/// <reference types="cypress" />
 describe('Product and Checkout Flow', () => {
     beforeEach(() => {
         // Visit the home page
-        cy.visit('http://localhost:3000');
+        cy.visit('http://localhost:3001');
     });
 
     it('allows viewing a product and initiating checkout', () => {
@@ -19,14 +20,29 @@ describe('Product and Checkout Flow', () => {
                 cy.get('h1').should('exist'); // Product title
 
                 // Select a variant if available (skip if simple implementation or no variants)
+                cy.get('body').then(($body) => {
+                    if ($body.find('h3:contains("Size")').length > 0) {
+                        // Click on the first available size
+                        cy.get('h3:contains("Size")').parent().find('button').not('.opacity-60').first().click();
+                    }
+                    if ($body.find('h3:contains("Color")').length > 0) {
+                        // Click on the first available color
+                        cy.get('h3:contains("Color")').parent().find('button').not('.opacity-60').first().click();
+                    }
+                });
+
+                cy.intercept('POST', '**/checkout').as('checkoutRequest');
 
                 // Click Buy Button
-                cy.contains('button', 'Buy Now').click();
+                cy.contains('button', 'Buy Now').should('not.be.disabled').click();
 
-                // Should see loading spinner or proceed
-                // Since this hits Stripe API, we might mock it or just check network call
-                // For now, check if button goes disabled or loading
-                cy.contains('button', 'Buy Now').should('be.disabled');
+                // Wait for the checkout request
+                cy.wait('@checkoutRequest').then((interception) => {
+                    expect(interception.response?.statusCode).to.eq(200);
+                    // Verify the variant was sent in the body
+                    const body = interception.request.body;
+                    expect(body).to.have.property('productId');
+                });
             }
         });
     });
