@@ -11,6 +11,7 @@ const ProductVariantSchema = new Schema<SharedProductVariant>({
     size: { type: String, required: true },
     color: { type: String, required: true },
     stock: { type: Number, required: true, min: 0 },
+    printfulVariantId: { type: Number }
 }, { _id: false });
 
 const ProductSchema = new Schema<IProduct>({
@@ -20,6 +21,7 @@ const ProductSchema = new Schema<IProduct>({
     images: [{ type: String }],
     slug: { type: String, required: true, unique: true },
     variants: [ProductVariantSchema],
+    printfulSyncProductId: { type: Number }
 }, {
     timestamps: true,
     toJSON: {

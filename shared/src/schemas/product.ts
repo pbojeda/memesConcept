@@ -4,7 +4,8 @@ import { z } from 'zod';
 export const ProductVariantSchema = z.object({
     size: z.string(),
     color: z.string(),
-    stock: z.number().min(0)
+    stock: z.number().min(0),
+    printfulVariantId: z.number().optional() // Maps directly to Printful's Sync Variant ID
 });
 
 // Base schema for common fields
@@ -16,6 +17,7 @@ const ProductBase = z.object({
     imageUrl: z.string().url("Must be a valid URL").max(2000, "URL too long").optional(), // Legacy, backward compatibility
     slug: z.string().optional(),
     variants: z.array(ProductVariantSchema).optional().default([]),
+    printfulSyncProductId: z.number().optional(), // Maps directly to Printful's Sync Product ID
 });
 
 // Full Product (Output / DB Record) - includes ID and Timestamps

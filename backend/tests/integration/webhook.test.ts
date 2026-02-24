@@ -64,7 +64,8 @@ describe('Webhook Integration', () => {
                     status: 'paid',
                     amountTotal: 2000,
                     customerDetails: { email: 'test@example.com' }
-                }
+                },
+                { new: true }
             );
         });
 

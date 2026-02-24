@@ -14,6 +14,7 @@ const envSchema = z.object({
     CLOUDINARY_CLOUD_NAME: z.string().optional(), // Optional for now to not break existing setup if not set immediately
     CLOUDINARY_API_KEY: z.string().optional(),
     CLOUDINARY_API_SECRET: z.string().optional(),
+    PRINTFUL_API_KEY: z.string().optional(), // Optional initially to avoid breaking tests/CI that don't have it yet. Make required later.
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

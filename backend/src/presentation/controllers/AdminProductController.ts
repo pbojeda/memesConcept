@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { Product } from '../../domain/models/Product';
 import { z } from 'zod';
 import { CloudinaryService } from '../../infrastructure/services/CloudinaryService';
+import { PrintfulService } from '../../infrastructure/services/PrintfulService';
 import { ProductSchema, CreateProductSchema } from '@memes/shared';
 
 export class AdminProductController {
@@ -16,9 +17,45 @@ export class AdminProductController {
                 images.push(data.imageUrl);
             }
 
+            let printfulSyncProductId: number | undefined;
+            const updatedVariants = [...(data.variants || [])];
+
+            try {
+                // Determine a basic variant to map to Printful for MVP if user provided no advanced mapping yet
+                // Realistically, you'd map our generic sizes (M, L) to Printful's Catalog Variant IDs (e.g. 4012 for Bella+Canvas M Black)
+                // For MVP automation, we will map them directly with placeholders if no specific mapping is selected from frontend.
+                const pfProduct = await PrintfulService.createSyncProduct({
+                    sync_product: {
+                        name: data.name,
+                        thumbnail: images[0]
+                    },
+                    sync_variants: updatedVariants.map((v, i) => ({
+                        // Hardcoded placeholder logic: Maps our variant to a random Printful T-Shirt Catalog ID for MVP presentation
+                        // Example Printful catalog ID: 4012 (Unisex Basic Softstyle T-Shirt - Black - L)
+                        variant_id: 4012 + i,
+                        retail_price: data.price.toString(),
+                        files: [{ url: images[0] || 'https://placehold.co/400' }]
+                    }))
+                });
+
+                if (pfProduct) {
+                    printfulSyncProductId = pfProduct.id;
+                    pfProduct.sync_variants.forEach((pfVar: any, i: number) => {
+                        if (updatedVariants[i]) {
+                            updatedVariants[i] = { ...updatedVariants[i], printfulVariantId: pfVar.id };
+                        }
+                    });
+                }
+            } catch (pfError) {
+                console.error("Printful sync failed, continuing without linking:", pfError);
+                // We choose to continue and create the local product even if Printful sync fails for MVP resilience.
+            }
+
             const product = await Product.create({
                 ...data,
-                images
+                images,
+                printfulSyncProductId,
+                variants: updatedVariants
             });
             res.status(201).json(product);
         } catch (error) {
