@@ -48,6 +48,17 @@
   - [x] Backend: Multer & Cloudinary Streams
   - [x] Frontend: Refactor `ImageUpload` component
 
+- [x] **Store Automation (Printful)**
+  - [x] Ticket: [MVP-08-printful-integration.md](docs/tickets/MVP-08-printful-integration.md)
+  - [x] Backend: Printful SDK, Auto-Create Products, Webhook Event processing
+  - [x] Ticket: [MVP-09-frontend-variants.md](docs/tickets/MVP-09-frontend-variants.md)
+  - [x] Frontend: BuyButton payload update, Cypress E2E Flow Update
+
+- [ ] **Admin Analytics (Dashboard)**
+  - [ ] Ticket: [MVP-10-analytics-dashboard.md](docs/tickets/MVP-10-analytics-dashboard.md)
+  - [ ] Backend: Analytics aggregation endpoint
+  - [ ] Frontend: Dashboard UI with basic charts
+
 - [ ] **Deployment Analysis & Verification**
   - [x] Analyze Deployment Options (Vercel, VPS, etc.)
   - [x] Ticket: [MVP-05-final-polish.md](docs/tickets/MVP-05-final-polish.md)

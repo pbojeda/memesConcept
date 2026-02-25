@@ -100,13 +100,14 @@ Monorepo structure with independent `backend` and `frontend` folders.
     -   [ ] **Variants**: `VariantSelector` in Product Detail.
     -   [ ] **Checkout**: Pass variant data to Stripe.
 
-### 8. Phase 4.5: Printful Automation Integration (`backend/` & `shared/`)
-- [ ] Ticket: [MVP-08-printful-integration.md](docs/tickets/MVP-08-printful-integration.md)
-- [ ] Add `PRINTFUL_API_KEY` to Zod environment schema.
-- [ ] Extend `ProductVariant` Zod schema to include optional `printfulSyncProductId` and `printfulVariantId`.
-- [ ] Create `PrintfulService` for `POST` calls to Printful's external API.
-- [ ] Update `AdminProductController` to create Printful Sync Products automagically upon our DB Product Creation.
-- [ ] Update `WebhookController` to transmit Paid Orders directly to Printful's Order API.
+### 8. Phase 4.5: Printful Automation Integration (`backend/` & `shared/`) - **DONE**
+- [x] Ticket: [MVP-08-printful-integration.md](docs/tickets/MVP-08-printful-integration.md)
+- [x] Ticket: [MVP-09-frontend-variants.md](docs/tickets/MVP-09-frontend-variants.md)
+- [x] Add `PRINTFUL_API_KEY` to Zod environment schema.
+- [x] Extend `ProductVariant` Zod schema to include optional `printfulSyncProductId` and `printfulVariantId`.
+- [x] Create `PrintfulService` for `POST` calls to Printful's external API.
+- [x] Update `AdminProductController` to create Printful Sync Products automagically upon our DB Product Creation.
+- [x] Update `WebhookController` to transmit Paid Orders directly to Printful's Order API.
 
 ### 9. Phase 5: CI/CD, Documentation & Deployment
 - [ ] **CI/CD**:
