@@ -59,6 +59,15 @@
   - [ ] Backend: Analytics aggregation endpoint
   - [ ] Frontend: Dashboard UI with basic charts
 
+- [ ] **Admin Authentication & Robustness**
+  - [ ] Ticket: [MVP-11-admin-auth.md](docs/tickets/MVP-11-admin-auth.md)
+  - [ ] Backend: Replace static Key with JWT/Session validation
+  - [ ] Frontend: NextAuth + Layout Middleware protection
+
+- [ ] **Customer Notifications**
+  - [ ] Ticket: [MVP-12-customer-emails.md](docs/tickets/MVP-12-customer-emails.md)
+  - [ ] Decide: Stripe Native vs Custom Resend API logic
+
 - [ ] **Deployment Analysis & Verification**
   - [x] Analyze Deployment Options (Vercel, VPS, etc.)
   - [x] Ticket: [MVP-05-final-polish.md](docs/tickets/MVP-05-final-polish.md)
