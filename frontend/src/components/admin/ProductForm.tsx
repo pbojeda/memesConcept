@@ -30,7 +30,12 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
             description: initialData?.description || '',
             slug: initialData?.slug || '',
             images: initialData?.images || [],
-            variants: initialData?.variants || []
+            variants: initialData?.variants?.length ? initialData.variants : (isEdit ? [] : [
+                { size: 'S', color: 'White', stock: 100 },
+                { size: 'M', color: 'White', stock: 100 },
+                { size: 'L', color: 'White', stock: 100 },
+                { size: 'XL', color: 'White', stock: 100 }
+            ])
         }
     });
 
@@ -60,8 +65,11 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
                 await adminApi.createProduct(data);
             }
 
-            // Invalidate cache to force reload on list page
+            // Invalidate cache to force reload on list page and edit page
             await queryClient.invalidateQueries({ queryKey: ['products'] });
+            if (isEdit && initialData?.id) {
+                await queryClient.invalidateQueries({ queryKey: ['product', initialData.id] });
+            }
 
             router.push('/admin/products');
             router.refresh();
@@ -117,7 +125,7 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
             <div className="space-y-4 border p-4 rounded-md bg-gray-50">
                 <div className="flex justify-between items-center">
                     <Label className="font-semibold text-gray-700">Variants (Size/Color)</Label>
-                    <Button type="button" variant="outline" size="sm" onClick={() => append({ size: '', color: '', stock: 0 })}>
+                    <Button type="button" variant="outline" size="sm" onClick={() => append({ size: 'S', color: 'White', stock: 100 })}>
                         <Plus className="w-4 h-4 mr-1" /> Add Variant
                     </Button>
                 </div>
@@ -126,11 +134,28 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
                     <div key={field.id} className="flex gap-2 items-end bg-white p-2 rounded border">
                         <div className="flex-1">
                             <Label className="text-xs text-gray-500">Size</Label>
-                            <Input {...form.register(`variants.${index}.size` as const)} placeholder="S, M, L" className="h-8" />
+                            <select
+                                {...form.register(`variants.${index}.size` as const)}
+                                className="flex h-8 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="2XL">2XL</option>
+                                <option value="3XL">3XL</option>
+                            </select>
                         </div>
                         <div className="flex-1">
                             <Label className="text-xs text-gray-500">Color</Label>
-                            <Input {...form.register(`variants.${index}.color` as const)} placeholder="Red, Blue" className="h-8" />
+                            <select
+                                {...form.register(`variants.${index}.color` as const)}
+                                className="flex h-8 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                                <option value="White">White</option>
+                                <option value="Black">Black</option>
+                                <option value="Navy">Navy</option>
+                            </select>
                         </div>
                         <div className="w-24">
                             <Label className="text-xs text-gray-500">Stock</Label>

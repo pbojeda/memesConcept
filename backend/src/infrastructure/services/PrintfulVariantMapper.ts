@@ -8,19 +8,28 @@ const PrintfulCatalogMap: Record<string, Record<string, number>> = {
         S: 4016,
         M: 4017,
         L: 4018,
-        XL: 4019
+        XL: 4019,
+        '2XL': 4020,
+        XXL: 4020, // Map XXL to 2XL id seamlessly
+        '3XL': 5295
     },
     White: {
         S: 4011,
         M: 4012,
         L: 4013,
-        XL: 4014
+        XL: 4014,
+        '2XL': 4015,
+        XXL: 4015,
+        '3XL': 5294
     },
     Navy: {
         S: 4111,
         M: 4112,
         L: 4113,
-        XL: 4114
+        XL: 4114,
+        '2XL': 4115,
+        XXL: 4115,
+        '3XL': 12874
     }
 };
 
