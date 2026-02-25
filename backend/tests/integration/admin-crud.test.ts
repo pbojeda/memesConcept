@@ -69,6 +69,8 @@ describe('Admin Product CRUD Integration', () => {
     // ------------------------------------------------------------------
     describe('PUT /admin/products/:id', () => {
         it('should update product', async () => {
+            // Mock findById
+            (Product.findById as jest.Mock).mockResolvedValue({ _id: '123', name: 'Old', printfulSyncProductId: null });
             // Mock findByIdAndUpdate
             (Product.findByIdAndUpdate as jest.Mock).mockResolvedValue({ name: 'Updated' });
 

@@ -161,6 +161,7 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
                             <Label className="text-xs text-gray-500">Stock</Label>
                             <Input type="number" {...form.register(`variants.${index}.stock` as const, { valueAsNumber: true })} className="h-8" />
                         </div>
+                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                         <input type="hidden" {...form.register(`variants.${index}.printfulVariantId` as any, { valueAsNumber: true })} />
                         <Button type="button" variant="destructive" size="icon" className="h-8 w-8" onClick={() => remove(index)}>
                             <Trash2 className="w-4 h-4" />
