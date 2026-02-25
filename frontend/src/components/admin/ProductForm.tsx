@@ -126,16 +126,17 @@ export function ProductForm({ initialData, isEdit = false }: { initialData?: Pro
                     <div key={field.id} className="flex gap-2 items-end bg-white p-2 rounded border">
                         <div className="flex-1">
                             <Label className="text-xs text-gray-500">Size</Label>
-                            <Input {...form.register(`variants.${index}.size` as "variants.0.size")} placeholder="S, M, L" className="h-8" />
+                            <Input {...form.register(`variants.${index}.size` as const)} placeholder="S, M, L" className="h-8" />
                         </div>
                         <div className="flex-1">
                             <Label className="text-xs text-gray-500">Color</Label>
-                            <Input {...form.register(`variants.${index}.color` as "variants.0.color")} placeholder="Red, Blue" className="h-8" />
+                            <Input {...form.register(`variants.${index}.color` as const)} placeholder="Red, Blue" className="h-8" />
                         </div>
                         <div className="w-24">
                             <Label className="text-xs text-gray-500">Stock</Label>
-                            <Input type="number" {...form.register(`variants.${index}.stock` as "variants.0.stock", { valueAsNumber: true })} className="h-8" />
+                            <Input type="number" {...form.register(`variants.${index}.stock` as const, { valueAsNumber: true })} className="h-8" />
                         </div>
+                        <input type="hidden" {...form.register(`variants.${index}.printfulVariantId` as any, { valueAsNumber: true })} />
                         <Button type="button" variant="destructive" size="icon" className="h-8 w-8" onClick={() => remove(index)}>
                             <Trash2 className="w-4 h-4" />
                         </Button>

@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { CloudinaryService } from '../../infrastructure/services/CloudinaryService';
 import { PrintfulService } from '../../infrastructure/services/PrintfulService';
 import { ProductSchema, CreateProductSchema } from '@memes/shared';
+import { getPrintfulCatalogVariantId } from '../../infrastructure/services/PrintfulVariantMapper';
 import { logger } from '../../app';
 
 export class AdminProductController {
@@ -29,10 +30,9 @@ export class AdminProductController {
                         name: data.name,
                         thumbnail: images[0]
                     },
-                    sync_variants: updatedVariants.map((v, i) => ({
-                        // Hardcoded placeholder logic: Maps our variant to a random Printful T-Shirt Catalog ID for MVP presentation
-                        // Example Printful catalog ID: 4012 (Unisex Basic Softstyle T-Shirt - Black - L)
-                        variant_id: 4012 + i,
+                    sync_variants: updatedVariants.map((v) => ({
+                        // Maps size and color to actual Printful base model ID
+                        variant_id: getPrintfulCatalogVariantId(v.color, v.size),
                         retail_price: data.price.toString(),
                         files: [{ url: images[0] || 'https://placehold.co/400' }]
                     }))
@@ -78,33 +78,74 @@ export class AdminProductController {
             const updateSchema = ProductSchema.partial();
             const data = updateSchema.parse(req.body);
 
+            const originalProduct = await Product.findById(id);
+            if (!originalProduct) {
+                res.status(404).json({ error: 'Product not found' });
+                return;
+            }
+
             let updateData: any = { ...data };
             if (data.imageUrl && (!data.images || data.images.length === 0)) {
                 updateData.images = [data.imageUrl];
                 delete updateData.imageUrl;
             }
 
-            const product = await Product.findByIdAndUpdate(id, updateData, { new: true });
+            if (originalProduct.printfulSyncProductId) {
+                if (data.variants !== undefined || data.price !== undefined) {
+                    try {
+                        // Variants or price changed: Delete old and recreate Printful product to sync it flawlessly
+                        await PrintfulService.deleteSyncProduct(originalProduct.printfulSyncProductId);
 
-            if (!product) {
-                res.status(404).json({ error: 'Product not found' });
-                return;
-            }
+                        const newImages = updateData.images || originalProduct.images || [];
+                        const newName = updateData.name || originalProduct.name;
+                        const newPrice = updateData.price !== undefined ? updateData.price : originalProduct.price;
+                        const newVariants = updateData.variants || originalProduct.variants || [];
 
-            if (product.printfulSyncProductId && (updateData.name || updateData.images)) {
-                try {
-                    await PrintfulService.updateSyncProduct(product.printfulSyncProductId, {
-                        sync_product: {
-                            name: product.name,
-                            thumbnail: product.images?.[0]
+                        const pfProduct = await PrintfulService.createSyncProduct({
+                            sync_product: {
+                                name: newName,
+                                thumbnail: newImages[0]
+                            },
+                            sync_variants: newVariants.map((v: any) => ({
+                                variant_id: getPrintfulCatalogVariantId(v.color, v.size),
+                                retail_price: newPrice.toString(),
+                                files: [{ url: newImages[0] || 'https://placehold.co/400' }]
+                            }))
+                        });
+
+                        if (pfProduct && pfProduct.id) {
+                            updateData.printfulSyncProductId = pfProduct.id;
+                            const pfFullProduct = await PrintfulService.getSyncProduct(pfProduct.id);
+                            if (pfFullProduct && pfFullProduct.sync_variants) {
+                                pfFullProduct.sync_variants.forEach((pfVar: any, i: number) => {
+                                    if (newVariants[i]) {
+                                        newVariants[i] = { ...newVariants[i], printfulVariantId: pfVar.id };
+                                    }
+                                });
+                                updateData.variants = newVariants;
+                            }
                         }
-                    });
-                    logger.info(`Updated associated Printful Sync Product: ${product.printfulSyncProductId}`);
-                } catch (pfError) {
-                    logger.warn({ err: pfError }, "Failed to update Sync Product in Printful, ignoring.");
+                        logger.info(`Recreated Printful Sync Product due to variant/price change: ${updateData.printfulSyncProductId}`);
+                    } catch (pfError) {
+                        logger.warn({ err: pfError }, "Failed to recreate Sync Product in Printful, ignoring.");
+                    }
+                } else if (updateData.name || updateData.images) {
+                    // Only minor details changed
+                    try {
+                        await PrintfulService.updateSyncProduct(originalProduct.printfulSyncProductId, {
+                            sync_product: {
+                                name: updateData.name || originalProduct.name,
+                                thumbnail: (updateData.images || originalProduct.images)?.[0]
+                            }
+                        });
+                        logger.info(`Updated associated Printful Sync Product: ${originalProduct.printfulSyncProductId}`);
+                    } catch (pfError) {
+                        logger.warn({ err: pfError }, "Failed to update Sync Product in Printful, ignoring.");
+                    }
                 }
             }
 
+            const product = await Product.findByIdAndUpdate(id, updateData, { new: true });
             res.status(200).json(product);
         } catch (error) {
             if (error instanceof z.ZodError) {
