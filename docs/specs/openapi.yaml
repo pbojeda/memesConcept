@@ -138,6 +138,22 @@ paths:
         '500':
           description: Upload failed
 
+  /admin/analytics:
+    get:
+      summary: Get store analytics (MVP-10)
+      operationId: getAnalytics
+      security:
+        - AdminAuth: []
+      responses:
+        '200':
+          description: Analytics data (revenue, orders, top products)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsResponse'
+        '401':
+          description: Unauthorized
+
   /checkout:
     post:
       summary: Create a Stripe Checkout Session
@@ -255,3 +271,24 @@ components:
           type: string
         code:
           type: string
+
+    AnalyticsResponse:
+      type: object
+      properties:
+        totalRevenue:
+          type: number
+        totalOrders:
+          type: integer
+        topProducts:
+          type: array
+          items:
+            type: object
+            properties:
+              productName:
+                type: string
+              salesCount:
+                type: integer
+      required:
+        - totalRevenue
+        - totalOrders
+        - topProducts

@@ -80,8 +80,23 @@ This document defines the UI components and state management for the Memes Conce
     - Displays preview of uploaded image.
     - Returns URL to parent form.
 
+### 4. Admin Analytics (MVP-10)
+**Route**: `/admin` (or `/admin/analytics`)
+
+**Goal**: View store performance metrics.
+
+**Components**:
+- `AnalyticsDashboard`:
+  - Main container fetching data from `GET /admin/analytics`.
+- `MetricCard`:
+  - Props: `title: string`, `value: format`, `icon: LucideIcon`
+  - Displays Total Revenue, Total Orders.
+- `TopProductsTable`:
+  - Props: `products: {productName: string, salesCount: number}[]`
+  - Displays a clean list of the top-performing formats.
+
 ## Security
-- Admin pages protected by a simple Client-Side check or Middleware checking for a hardcoded secret in localStorage/cookie (MVP).
+- Admin pages protected by NextAuth Session Validation (JWT Token injection).
 
 ## Shared Components (Helpers)
 - `ProductImage`:
