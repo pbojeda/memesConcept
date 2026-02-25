@@ -51,6 +51,7 @@ import { productRouter } from './presentation/routes/productRoutes';
 import { checkoutRouter } from './presentation/routes/checkoutRoutes';
 import { webhookRouter } from './presentation/routes/webhookRoutes';
 import adminProductRouter from './presentation/routes/adminProductRoutes'; // Import Admin Router
+import authRouter from './presentation/routes/authRoutes'; // Import Auth Router
 
 // Webhook route needs raw body
 app.use('/webhook', express.raw({ type: 'application/json' }), webhookRouter);
@@ -62,6 +63,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use('/products', productRouter);
 app.use('/checkout', checkoutRouter);
 app.use('/admin/products', adminProductRouter); // Register Admin Routes
+app.use('/admin/auth', authRouter); // Register Auth Routes
 
 // Error Handling Middleware
 app.use((err: any, req: Request, res: Response, next: import('express').NextFunction) => {

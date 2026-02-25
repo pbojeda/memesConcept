@@ -11,6 +11,9 @@ const envSchema = z.object({
     FRONTEND_URL: z.string().url().default('http://localhost:3000'),
     NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
     ADMIN_API_KEY: z.string().min(1).default('secret-key'), // Default for ease of use in dev, but should be set in prod
+    JWT_SECRET: z.string().min(1).default('your-very-secret-jwt-key'),
+    ADMIN_USERNAME: z.string().min(1).default('admin'),
+    ADMIN_PASSWORD: z.string().min(1).default('admin123'),
     CLOUDINARY_CLOUD_NAME: z.string().optional(), // Optional for now to not break existing setup if not set immediately
     CLOUDINARY_API_KEY: z.string().optional(),
     CLOUDINARY_API_SECRET: z.string().optional(),

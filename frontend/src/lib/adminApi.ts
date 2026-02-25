@@ -5,9 +5,20 @@ import { Product } from '@/schemas/product';
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + '/admin/products',
     headers: {
-        'Content-Type': 'application/json',
-        'x-admin-key': process.env.NEXT_PUBLIC_ADMIN_API_KEY
+        'Content-Type': 'application/json'
     }
+});
+
+import { getSession } from 'next-auth/react';
+
+api.interceptors.request.use(async (config) => {
+    const session = await getSession();
+    // @ts-ignore
+    const token = session?.backendToken;
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
 });
 
 export const adminApi = {
@@ -39,11 +50,15 @@ export const adminApi = {
         const formData = new FormData();
         formData.append('image', file);
         // We use native fetch to avoid axios overriding the boundary needed for multipart
+        const session = await getSession();
+        // @ts-ignore
+        const token = session?.backendToken || '';
+
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/products/upload`, {
             method: 'POST',
             body: formData,
             headers: {
-                'x-admin-key': process.env.NEXT_PUBLIC_ADMIN_API_KEY || ''
+                'Authorization': `Bearer ${token}`
             }
         });
         if (!response.ok) throw new Error('Failed to upload image');

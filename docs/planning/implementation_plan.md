@@ -109,6 +109,18 @@ Monorepo structure with independent `backend` and `frontend` folders.
 - [x] Update `AdminProductController` to create Printful Sync Products automagically upon our DB Product Creation.
 - [x] Update `WebhookController` to transmit Paid Orders directly to Printful's Order API.
 
+### 9. Phase 4.7: Auth, Emails & Analytics
+- [x] **MVP-11 Admin Authentication (JWT/NextAuth)** - **DONE**:
+  - [x] Implement secure API authentication using JWT.
+  - [x] Implement frontend authentication with NextAuth.js.
+  - [x] Secure `AdminLayout` and `middleware.ts`.
+- [x] **MVP-12 Customer Emails (Native)** - **DONE**:
+  - [x] Leverage Stripe Native Customer Flow.
+  - [x] Leverage Printful Native tracking flow.
+- [ ] **MVP-10 Analytics Dashboard** - **PLANNED**:
+  - [ ] Implement backend aggregation endpoints `/admin/analytics`.
+  - [ ] Implement robust charts on the Frontend dashboard.
+
 ### 9. Phase 5: CI/CD, Documentation & Deployment
 - [ ] **CI/CD**:
   - [ ] Optimize GitHub Actions (Backend/Frontend split).
