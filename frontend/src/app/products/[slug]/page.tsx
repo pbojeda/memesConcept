@@ -33,6 +33,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 }
 
+import { PageViewTracker } from '@/components/Tracking';
+
 export default async function ProductPage({ params }: PageProps) {
     const { slug } = await params;
     let product;
@@ -46,5 +48,10 @@ export default async function ProductPage({ params }: PageProps) {
         notFound();
     }
 
-    return <ProductDetailClient product={product} />;
+    return (
+        <>
+            <PageViewTracker eventType="view_product" productId={product.id} />
+            <ProductDetailClient product={product} />
+        </>
+    );
 }

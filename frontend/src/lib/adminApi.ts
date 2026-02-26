@@ -13,7 +13,7 @@ import { getSession } from 'next-auth/react';
 
 api.interceptors.request.use(async (config) => {
     const session = await getSession();
-    // @ts-ignore
+    // @ts-expect-error: Custom property injected
     const token = session?.backendToken;
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -51,7 +51,7 @@ export const adminApi = {
         formData.append('image', file);
         // We use native fetch to avoid axios overriding the boundary needed for multipart
         const session = await getSession();
-        // @ts-ignore
+        // @ts-expect-error: Custom property injected
         const token = session?.backendToken || '';
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/products/upload`, {
@@ -64,5 +64,15 @@ export const adminApi = {
         if (!response.ok) throw new Error('Failed to upload image');
         const data = await response.json();
         return data.url;
+    },
+
+    getAnalytics: async (filters?: { startDate?: string; endDate?: string; productId?: string }) => {
+        // Because baseURL is set to /products, we have to override it or just use full path 
+        // since baseURL works like string concatenation if not absolute. Let's just create a new config override.
+        const response = await api.get('/admin/analytics', {
+            baseURL: process.env.NEXT_PUBLIC_API_URL,
+            params: filters
+        });
+        return response.data;
     }
 };

@@ -65,6 +65,11 @@ app.use('/checkout', checkoutRouter);
 app.use('/admin/products', adminProductRouter); // Register Admin Routes
 app.use('/admin/auth', authRouter); // Register Auth Routes
 
+import analyticsRouter from './presentation/routes/analyticsRoutes';
+import adminAnalyticsRouter from './presentation/routes/adminAnalyticsRoutes';
+app.use('/analytics', analyticsRouter); // Public tracking
+app.use('/admin/analytics', adminAnalyticsRouter); // Protected dashboard stats
+
 // Error Handling Middleware
 app.use((err: any, req: Request, res: Response, next: import('express').NextFunction) => {
     const statusCode = err.statusCode || 500;

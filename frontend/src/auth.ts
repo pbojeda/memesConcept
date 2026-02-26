@@ -41,13 +41,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                // @ts-ignore
+                // @ts-expect-error: Custom property injected
                 token.backendToken = user.token;
             }
             return token;
         },
         async session({ session, token }) {
-            // @ts-ignore
+            // @ts-expect-error: Custom property injected
             session.backendToken = token.backendToken;
             return session;
         }

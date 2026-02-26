@@ -2,6 +2,7 @@ import Link from "next/link";
 import { productService } from "../services/product.service";
 import { ProductImage } from "../components/ProductImage";
 import { Product } from "@/schemas/product";
+import { PageViewTracker } from '@/components/Tracking';
 
 export default async function HomePage() {
   // Fetch products to list them
@@ -18,6 +19,7 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <PageViewTracker eventType="page_view" />
       <h1 className="text-4xl font-bold mb-8">Featured Memes</h1>
       <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
         {products.map((product) => (

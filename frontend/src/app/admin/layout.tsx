@@ -13,6 +13,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                         <h2 className="text-xl font-bold text-gray-800">Admin Panel</h2>
                     </div>
                     <nav className="p-4 space-y-2">
+                        <Link href="/admin" className="block px-4 py-2 hover:bg-gray-50 rounded text-gray-700 font-medium">
+                            Dashboard
+                        </Link>
                         <Link href="/admin/products" className="block px-4 py-2 hover:bg-gray-50 rounded text-gray-700 font-medium">
                             Products
                         </Link>

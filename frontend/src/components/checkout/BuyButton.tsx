@@ -35,7 +35,20 @@ export function BuyButton({ productId, selectedVariant, quantity = 1, onCheckout
     return (
         <Button
             className="w-full h-12 text-lg"
-            onClick={() => mutation.mutate()}
+            onClick={() => {
+                // Tracking
+                fetch(`${process.env.NEXT_PUBLIC_API_URL}/analytics/track`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        eventType: 'initiate_checkout',
+                        productId: productId,
+                        source: document.referrer || 'direct'
+                    })
+                }).catch(() => { });
+
+                mutation.mutate();
+            }}
             disabled={mutation.isPending || disabled}
         >
             {mutation.isPending ? <Spinner className="mr-2" /> : "Buy Now"}
