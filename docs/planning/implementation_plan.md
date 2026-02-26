@@ -117,9 +117,9 @@ Monorepo structure with independent `backend` and `frontend` folders.
 - [x] **MVP-12 Customer Emails (Native)** - **DONE**:
   - [x] Leverage Stripe Native Customer Flow.
   - [x] Leverage Printful Native tracking flow.
-- [ ] **MVP-10 Analytics Dashboard** - **PLANNED**:
-  - [ ] Implement backend aggregation endpoints `/admin/analytics`.
-  - [ ] Implement robust charts on the Frontend dashboard.
+- [x] **MVP-10 Analytics Dashboard** - **DONE**:
+  - [x] Implement backend aggregation endpoints `/admin/analytics`.
+  - [x] Implement robust charts on the Frontend dashboard.
 
 ### 9. Phase 5: CI/CD, Documentation & Deployment
 - [ ] **CI/CD**:
