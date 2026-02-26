@@ -99,6 +99,7 @@ Monorepo structure with independent `backend` and `frontend` folders.
   - [ ] **Store Enhancements**:
     -   [ ] **Variants**: `VariantSelector` in Product Detail.
     -   [ ] **Checkout**: Pass variant data to Stripe.
+    -   [x] **UX Improvements**: Back navigation button and Venta cruzada (`SimilarProducts` grid) implemented in Product page.
 
 ### 8. Phase 4.5: Printful Automation Integration (`backend/` & `shared/`) - **DONE**
 - [x] Ticket: [MVP-08-printful-integration.md](docs/tickets/MVP-08-printful-integration.md)

@@ -113,3 +113,8 @@ This document defines the UI components and state management for the Memes Conce
 - `VariantSelector`:
   - Props: `variants: ProductVariant[]`, `selected?: ProductVariant`, `onChange: (v) => void`
   - UI: Displays available sizes/colors. Disables out of stock options.
+- `SimilarProducts` (Cross-Selling):
+  - Props: `currentProductId: string`
+  - Logic: Fetches all products, strips the current one, and returns a grid of 4 random products.
+- `GoBackButton`:
+  - Logic: Native `next/link` wrapped with a Lucide `ArrowLeft` icon for simple mobile back routing on Product Pages.

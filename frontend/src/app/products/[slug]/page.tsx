@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 import { PageViewTracker } from '@/components/Tracking';
+import { SimilarProducts } from '@/components/SimilarProducts';
 
 export default async function ProductPage({ params }: PageProps) {
     const { slug } = await params;
@@ -49,9 +50,10 @@ export default async function ProductPage({ params }: PageProps) {
     }
 
     return (
-        <>
+        <div className="pb-24">
             <PageViewTracker eventType="view_product" productId={product.id} />
             <ProductDetailClient product={product} />
-        </>
+            <SimilarProducts currentProductId={product.id} />
+        </div>
     );
 }
