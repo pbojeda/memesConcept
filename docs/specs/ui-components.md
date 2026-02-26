@@ -83,17 +83,24 @@ This document defines the UI components and state management for the Memes Conce
 ### 4. Admin Analytics (MVP-10)
 **Route**: `/admin` (or `/admin/analytics`)
 
-**Goal**: View store performance metrics.
+**Goal**: View store performance metrics and marketing KPIs.
 
 **Components**:
 - `AnalyticsDashboard`:
   - Main container fetching data from `GET /admin/analytics`.
+- `DashboardFilters`:
+  - `DateRangePicker`: Allows filtering by custom dates (e.g. Last 7 Days, Last 30 Days).
+  - `ProductSelector`: Dropdown to filter analytics by a specific product.
 - `MetricCard`:
-  - Props: `title: string`, `value: format`, `icon: LucideIcon`
-  - Displays Total Revenue, Total Orders.
+  - Props: `title: string`, `value: string`, `icon: LucideIcon`
+  - Displays: Total Revenue, Total Orders, Conversion Rate, Page Views.
+- `FunnelChart` (or Metrics Breakdown):
+  - Visualizes: `Page Views` > `Checkouts Initiated` > `Purchases Completed`.
 - `TopProductsTable`:
   - Props: `products: {productName: string, salesCount: number}[]`
-  - Displays a clean list of the top-performing formats.
+  - Displays a clean list of the top-performing products.
+- `TrafficSourcesList`:
+  - Displays where the users are coming from (Referrers, Direct, Social).
 
 ## Security
 - Admin pages protected by NextAuth Session Validation (JWT Token injection).

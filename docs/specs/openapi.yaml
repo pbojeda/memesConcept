@@ -144,15 +144,55 @@ paths:
       operationId: getAnalytics
       security:
         - AdminAuth: []
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Filter by start date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Filter by end date
+        - name: productId
+          in: query
+          schema:
+            type: string
+          description: Filter by specific product ID
       responses:
         '200':
-          description: Analytics data (revenue, orders, top products)
+          description: Analytics data (revenue, orders, top products, funnel)
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AnalyticsResponse'
         '401':
           description: Unauthorized
+
+  /analytics/track:
+    post:
+      summary: Track custom store events for analytics (Page Views, Traffic)
+      operationId: trackEvent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                eventType:
+                  type: string
+                  enum: [page_view, view_product, initiate_checkout]
+                productId:
+                  type: string
+                source:
+                  type: string
+                  description: Traffic source or referrer URL
+      responses:
+        '200':
+          description: Event tracked
 
   /checkout:
     post:
@@ -288,7 +328,30 @@ components:
                 type: string
               salesCount:
                 type: integer
+        funnelMetrics:
+          type: object
+          properties:
+            pageViews:
+              type: integer
+            checkoutsInitiated:
+              type: integer
+            purchasesCompleted:
+              type: integer
+            conversionRate:
+              type: number
+              description: Percentage of page views that resulted in a purchase
+        trafficSources:
+          type: array
+          items:
+            type: object
+            properties:
+              source:
+                type: string
+              visits:
+                type: integer
       required:
         - totalRevenue
         - totalOrders
         - topProducts
+        - funnelMetrics
+        - trafficSources
