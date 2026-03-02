@@ -57,15 +57,27 @@ export class WebhookController {
 
             if (order && order.status === 'paid' && session.customer_details?.address) {
                 try {
-                    // Recover Product Variant mapping
-                    const product = await Product.findById(order.productId);
-                    const selectedVariant = product?.variants.find(
-                        (v) => v.size === order.variant?.size && v.color === order.variant?.color
-                    );
+                    const pfItems = [];
+                    for (const item of order.items) {
+                        const product = await Product.findById(item.productId);
+                        const selectedVariant = product?.variants.find(
+                            (v) => v.size === item.variant?.size && v.color === item.variant?.color
+                        );
 
-                    if (!selectedVariant || !selectedVariant.printfulVariantId) {
-                        logger.warn(`Order ${order.id} paid but no Printful sync_variant_id mapped. Needs manual fulfillment.`);
-                        return; // Exit early, we cannot send this to Printful
+                        if (selectedVariant?.printfulVariantId) {
+                            pfItems.push({
+                                sync_variant_id: selectedVariant.printfulVariantId,
+                                quantity: item.quantity,
+                                retail_price: product!.price.toString()
+                            });
+                        } else {
+                            logger.warn(`Item in order ${order.id} has no Printful sync_variant_id mapped.`);
+                        }
+                    }
+
+                    if (pfItems.length === 0) {
+                        logger.warn(`Order ${order.id} paid but no Printful items mapped. Needs manual fulfillment.`);
+                        return;
                     }
 
                     // Map Stripe Customer details to Printful Order Format
@@ -84,13 +96,7 @@ export class WebhookController {
                             email: session.customer_details.email || undefined,
                             phone: session.customer_details.phone || undefined,
                         },
-                        items: [
-                            {
-                                sync_variant_id: selectedVariant.printfulVariantId,
-                                quantity: order.quantity,
-                                retail_price: ((order.amountTotal || 0) / 100).toString()
-                            }
-                        ]
+                        items: pfItems
                     });
 
                     logger.info(`🚀 Successfully Dispatched to Printful: ${pfOrder.id}`);

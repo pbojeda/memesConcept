@@ -31,7 +31,8 @@ describe('Checkout Integration', () => {
             const mockProduct = {
                 _id: 'product-id',
                 name: 'Test Product',
-                variants: [{ size: 'M', color: 'Red', stock: 10 }],
+                price: 20,
+                variants: [{ size: 'M', color: 'Red', stock: 10, printfulVariantId: 123 }],
                 save: jest.fn()
             };
             (Product.findById as jest.Mock).mockResolvedValue(mockProduct);
@@ -46,9 +47,13 @@ describe('Checkout Integration', () => {
             const response = await request(app)
                 .post('/checkout')
                 .send({
-                    productId: 'product-id',
-                    quantity: 1,
-                    variant: { size: 'M', color: 'Red' }
+                    items: [
+                        {
+                            productId: 'product-id',
+                            quantity: 1,
+                            variant: { size: 'M', color: 'Red' }
+                        }
+                    ]
                 });
 
             expect(response.status).toBe(200);
@@ -59,8 +64,12 @@ describe('Checkout Integration', () => {
             const response = await request(app)
                 .post('/checkout')
                 .send({
-                    // Missing productId
-                    quantity: 1
+                    items: [
+                        {
+                            // Missing productId
+                            quantity: 1
+                        }
+                    ]
                 });
 
             expect(response.status).toBe(400);
@@ -72,9 +81,13 @@ describe('Checkout Integration', () => {
             const response = await request(app)
                 .post('/checkout')
                 .send({
-                    productId: 'non-existent',
-                    quantity: 1,
-                    variant: { size: 'M', color: 'Red' }
+                    items: [
+                        {
+                            productId: 'non-existent',
+                            quantity: 1,
+                            variant: { size: 'M', color: 'Red' }
+                        }
+                    ]
                 });
 
             expect(response.status).toBe(404);

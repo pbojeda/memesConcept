@@ -1,13 +1,14 @@
 import { api } from "../lib/api";
 import { CheckoutSessionResponse } from "../types";
 
-export interface CreateCheckoutSessionRequest {
+export interface CreateCheckoutSessionItem {
     productId: string;
     quantity: number;
-    variant?: {
-        size?: string;
-        color?: string;
-    };
+    variant?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+}
+
+export interface CreateCheckoutSessionRequest {
+    items: CreateCheckoutSessionItem[];
 }
 
 export const checkoutService = {

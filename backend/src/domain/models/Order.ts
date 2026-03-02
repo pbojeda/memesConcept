@@ -1,12 +1,16 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-export interface IOrder extends Document {
+export interface IOrderItem {
     productId: mongoose.Types.ObjectId;
     quantity: number;
     variant?: {
         size: string;
         color: string;
     };
+}
+
+export interface IOrder extends Document {
+    items: IOrderItem[];
     stripeSessionId: string;
     status: 'pending' | 'paid' | 'failed';
     amountTotal?: number;
@@ -17,12 +21,14 @@ export interface IOrder extends Document {
 }
 
 const OrderSchema = new Schema<IOrder>({
-    productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
-    quantity: { type: Number, required: true, min: 1 },
-    variant: {
-        size: { type: String },
-        color: { type: String },
-    },
+    items: [{
+        productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+        quantity: { type: Number, required: true, min: 1 },
+        variant: {
+            size: { type: String },
+            color: { type: String },
+        },
+    }],
     stripeSessionId: { type: String, required: true, unique: true },
     status: { type: String, enum: ['pending', 'paid', 'failed'], default: 'pending' },
     amountTotal: { type: Number },

@@ -7,8 +7,9 @@ import { Product, ProductVariant } from "../../types";
 import { ProductGallery } from "./ProductGallery";
 import { ProductInfo } from "./ProductInfo";
 import { VariantSelector } from "./VariantSelector";
-import { BuyButton } from "../checkout/BuyButton";
-import { EmbeddedCheckoutComponent } from "../checkout/EmbeddedCheckout";
+import { Button } from '@/components/ui/button';
+import { QuantitySelector } from "./QuantitySelector";
+import { useCartStore } from "@/store/cartStore";
 
 interface ProductDetailClientProps {
     product: Product;
@@ -18,7 +19,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
     const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
         product.variants[0] || null
     );
-    const [clientSecret, setClientSecret] = useState<string | null>(null);
+    const [quantity, setQuantity] = useState(1);
+    const { addItem } = useCartStore();
 
     return (
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -46,24 +48,25 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                         />
                     </div>
 
-                    <div className="mt-10">
-                        <BuyButton
-                            productId={product.id}
-                            selectedVariant={selectedVariant}
-                            onCheckoutStart={setClientSecret}
+                    <div className="mt-10 flex flex-col space-y-4">
+                        <div className="flex items-center space-x-4">
+                            <span className="font-medium">Quantity:</span>
+                            <QuantitySelector quantity={quantity} onChange={setQuantity} />
+                        </div>
+                        <Button
+                            size="lg"
+                            className="w-full text-lg py-6"
+                            onClick={() => {
+                                addItem(product, selectedVariant || undefined, quantity);
+                            }}
                             disabled={product.variants?.some(v => v.size || v.color) ? !selectedVariant : false}
-                        />
+                            data-testid="add-to-cart-button"
+                        >
+                            Add to Cart
+                        </Button>
                     </div>
                 </div>
             </div>
-
-            {/* Checkout Modal */}
-            {clientSecret && (
-                <EmbeddedCheckoutComponent
-                    clientSecret={clientSecret}
-                    onClose={() => setClientSecret(null)}
-                />
-            )}
         </div>
     );
 }

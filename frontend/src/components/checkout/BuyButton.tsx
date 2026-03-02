@@ -17,9 +17,13 @@ interface BuyButtonProps {
 export function BuyButton({ productId, selectedVariant, quantity = 1, onCheckoutStart, disabled }: BuyButtonProps) {
     const mutation = useMutation({
         mutationFn: () => checkoutService.createSession({
-            productId,
-            quantity,
-            variant: selectedVariant ? { size: selectedVariant.size, color: selectedVariant.color } : undefined
+            items: [
+                {
+                    productId,
+                    quantity,
+                    variant: selectedVariant ? { size: selectedVariant.size, color: selectedVariant.color } : undefined
+                }
+            ]
         }),
         onSuccess: (data) => {
             if (onCheckoutStart) {
