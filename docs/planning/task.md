@@ -54,6 +54,12 @@
   - [x] Ticket: [MVP-09-frontend-variants.md](docs/tickets/MVP-09-frontend-variants.md)
   - [x] Frontend: BuyButton payload update, Cypress E2E Flow Update
 
+- [x] **Multi-item Shopping Cart**
+  - [x] Ticket: [MVP-13-shopping-cart.md](docs/tickets/MVP-13-shopping-cart.md)
+  - [x] Backend: Refactor Order & Checkout schemas arrays functionality
+  - [x] Frontend: Zustand implementation `cartStore.ts`
+  - [x] E2E Tests: shopping-cart cypress integration
+
 - [ ] **Admin Analytics (Dashboard)**
   - [ ] Ticket: [MVP-10-analytics-dashboard.md](docs/tickets/MVP-10-analytics-dashboard.md)
   - [ ] Backend: Analytics aggregation endpoint

@@ -27,11 +27,14 @@ This document defines the UI components and state management for the Memes Conce
   - Props: `variants: Variant[]`, `onChange: (variant) => void`
   - State: Selected Size, Selected Color.
   - UI: Button group for sizes, Color swatches (if color exists).
-- `BuyButton`:
-  - Props: `productId: string`, `selectedVariant: Variant`
-  - Behavior: Triggers `checkout` mutation.
-- `CheckoutModal` (or Inline):
-  - Behavior: renders `<EmbeddedCheckoutProvider>` from Stripe.
+- `QuantitySelector`:
+  - Props: `quantity: number`, `onChange: (q) => void`
+  - UI: Minus/Plus buttons with numeric input.
+- `AddToCartButton` (replaces BuyButton):
+  - Props: `product: Product`, `selectedVariant: Variant`, `quantity: number`
+  - Behavior: Adds to `cartStore`.
+- `CartSidebar` or `CheckoutModal`:
+  - Behavior: Slide-over or modal showing current cart items, subtotal, and "Checkout" button triggering `checkout` mutation.
 
 ### 2. Success Page
 **Route**: `/success`
@@ -49,9 +52,24 @@ This document defines the UI components and state management for the Memes Conce
 - `useCreateCheckoutSession()`: Mutation to POST `/checkout`.
 
 ### Client State (Local/Zustand)
-- `cartStore` (Optional for MVP, maybe just direct buy):
-  - `items`: Array of selected products.
-  - *Decision*: For MVP, we might stick to "Buy Now" flow (Direct Checkout) to simplify.
+- `cartStore`:
+  - `items`: Array of `{ product: Product, variant?: Variant, quantity: number }`.
+  - `addItem`, `removeItem`, `updateQuantity`, `clearCart`.
+  - Behavior: Persisted in `localStorage` for returning sessions.
+
+### 2.5 Cart Drawer / Page (New)
+**Route**: Slide-over Drawer (Global) or `/cart`
+
+**Goal**: Review items, adjust quantities, initiate checkout.
+
+**Components**:
+- `CartItem`:
+  - Displays: Mini image, Title, Variant (Size/Color), Price.
+  - Controls: `QuantitySelector`, `RemoveIcon` (Trash can).
+- `CartSummary`:
+  - Displays: Subtotal calculation (`items.reduce`).
+- `CheckoutButton`:
+  - Behavior: Triggers `useCreateCheckoutSession(items)` mutation and redirects/opens Stripe Embedded Checkout.
 
 ## Design System (Radix UI + Tailwind)
 

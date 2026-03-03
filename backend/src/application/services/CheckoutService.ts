@@ -7,60 +7,66 @@ import { CheckoutRequest } from '../validators/checkoutValidator';
 
 export class CheckoutService {
     async createCheckoutSession(data: CheckoutRequest) {
-        const product = await Product.findById(data.productId);
+        const lineItems = [];
+        const orderItems = [];
+        let totalAmount = 0;
 
-        if (!product) {
-            throw new NotFoundError('Product not found');
-        }
+        for (const item of data.items) {
+            const product = await Product.findById(item.productId);
+            if (!product) {
+                throw new NotFoundError(`Product not found: ${item.productId}`);
+            }
 
-        // Validate stock logic could go here (omitted for MVP simplicity)
-
-        try {
-            const variantLabel = [data.variant?.size, data.variant?.color].filter(Boolean).join(' - ');
+            const variantLabel = [item.variant?.size, item.variant?.color].filter(Boolean).join(' - ');
             const displayDescription = variantLabel ? `Variant: ${variantLabel}` : undefined;
-            // Ensure images passed to Stripe are valid HTTP URLs and under 2048 chars.
-            // Old database seeds or mock items might be using base64 'data:image/' which Stripe rejects.
+
             const rawImages = (product.images?.length > 0 ? product.images : (product.imageUrl ? [product.imageUrl] : []));
             const validImages = rawImages.filter(url =>
                 url && typeof url === 'string' && url.length < 2000 && url.startsWith('http')
             );
 
-            // Create Stripe Session
+            lineItems.push({
+                price_data: {
+                    currency: 'usd',
+                    product_data: {
+                        name: product.name,
+                        description: displayDescription,
+                        images: validImages.length > 0 ? validImages : undefined,
+                        metadata: {
+                            productId: product.id,
+                            variant: JSON.stringify(item.variant)
+                        }
+                    },
+                    unit_amount: Math.round(product.price * 100),
+                },
+                quantity: item.quantity,
+            });
+
+            orderItems.push({
+                productId: product.id,
+                quantity: item.quantity,
+                variant: item.variant,
+            });
+
+            totalAmount += (product.price * 100) * item.quantity;
+        }
+
+        try {
             const session = await stripe.checkout.sessions.create({
                 ui_mode: 'embedded',
-                line_items: [
-                    {
-                        price_data: {
-                            currency: 'usd',
-                            product_data: {
-                                name: product.name,
-                                description: displayDescription,
-                                images: validImages.length > 0 ? validImages : undefined,
-                                metadata: {
-                                    productId: product.id,
-                                    variant: JSON.stringify(data.variant)
-                                }
-                            },
-                            unit_amount: Math.round(product.price * 100), // Stripe expects cents
-                        },
-                        quantity: data.quantity,
-                    },
-                ],
+                line_items: lineItems,
                 mode: 'payment',
                 shipping_address_collection: {
-                    allowed_countries: ['US', 'CA', 'ES', 'GB', 'DE', 'FR'], // Adjust allowed countries as needed
+                    allowed_countries: ['US', 'CA', 'ES', 'GB', 'DE', 'FR'],
                 },
                 return_url: `${config.FRONTEND_URL}/return?session_id={CHECKOUT_SESSION_ID}`,
             });
 
-            // Create Order record (Pending)
             await Order.create({
-                productId: product.id,
-                quantity: data.quantity,
-                variant: data.variant,
+                items: orderItems,
                 stripeSessionId: session.id,
                 status: 'pending',
-                amountTotal: (product.price * 100) * data.quantity
+                amountTotal: totalAmount
             });
 
             return { clientSecret: session.client_secret, id: session.id };

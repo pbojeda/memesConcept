@@ -32,6 +32,7 @@ export const metadata: Metadata = {
 import { PostHogProvider } from "../providers/PostHogProvider";
 import { Footer } from "../components/ui/Footer";
 import { CookieBanner } from "../components/ui/CookieBanner";
+import { Header } from "../components/layout/Header";
 
 export default function RootLayout({
   children,
@@ -46,6 +47,7 @@ export default function RootLayout({
         <PostHogProvider>
           <QueryProvider>
             <div className="flex flex-col min-h-screen">
+              <Header />
               <main className="flex-grow">
                 {children}
               </main>

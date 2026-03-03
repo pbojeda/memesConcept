@@ -281,21 +281,29 @@ components:
     CheckoutSessionRequest:
       type: object
       properties:
-        productId:
-          type: string
-        quantity:
-          type: integer
-          minimum: 1
-        variant:
-          type: object
-          properties:
-            size:
-              type: string
-            color:
-              type: string
+        items:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+              quantity:
+                type: integer
+                minimum: 1
+              variant:
+                type: object
+                properties:
+                  size:
+                    type: string
+                  color:
+                    type: string
+            required:
+              - productId
+              - quantity
       required:
-        - productId
-        - quantity
+        - items
 
     CheckoutSessionResponse:
       type: object

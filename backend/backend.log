@@ -1,0 +1,523 @@
+
+> backend@1.0.0 start
+> node dist/backend/src/index.js
+
+[dotenv@17.3.1] injecting env (11) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+(node:35468) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[17:33:06.828] INFO (35468): Server running at http://localhost:4000
+✅ Connected to MongoDB (Attempt 1)
+[12:50:13.413] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "54ms"
+    ip: "::1"
+[12:50:13.665] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "12ms"
+    ip: "::1"
+[12:50:27.056] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products/69a1782da163ffff67f79a44"
+    userAgent: "node"
+    status: 200
+    duration: "34ms"
+    ip: "::1"
+[12:50:27.057] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products/69a1782da163ffff67f79a44"
+    userAgent: "node"
+    status: 200
+    duration: "37ms"
+    ip: "::1"
+[12:50:27.095] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "30ms"
+    ip: "::1"
+[12:50:27.139] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "1ms"
+    ip: "::1"
+[12:50:27.148] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "7ms"
+    ip: "::1"
+[12:50:44.807] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/checkout"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "753ms"
+    ip: "::1"
+[12:50:53.883] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/checkout"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "534ms"
+    ip: "::1"
+[12:51:19.663] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "17ms"
+    ip: "::1"
+[12:51:19.665] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "1ms"
+    ip: "::1"
+[12:51:24.370] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "28ms"
+    ip: "::1"
+[12:51:24.494] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "1ms"
+    ip: "::1"
+[12:51:29.488] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products/69a1940ab15a3d2d7adb0763"
+    userAgent: "node"
+    status: 200
+    duration: "31ms"
+    ip: "::1"
+[12:51:29.488] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products/69a1940ab15a3d2d7adb0763"
+    userAgent: "node"
+    status: 200
+    duration: "31ms"
+    ip: "::1"
+[12:51:29.525] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "28ms"
+    ip: "::1"
+[12:51:29.552] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "1ms"
+    ip: "::1"
+[12:51:29.554] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "1ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:51:38.204] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "3ms"
+    ip: "::1"
+[12:51:54.304] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/checkout"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "640ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:15.510] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/analytics?startDate=&endDate=&productId="
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "1ms"
+    ip: "::1"
+[12:52:15.511] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "0ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:16.534] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/analytics?startDate=&endDate=&productId="
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "0ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:16.535] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "0ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:18.563] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/analytics?startDate=&endDate=&productId="
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "1ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:18.563] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "0ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:22.602] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/analytics?startDate=&endDate=&productId="
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "1ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:22.603] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "1ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:30.492] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "1ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:31.511] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "1ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:33.535] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "1ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:37.560] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "1ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:45.675] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/analytics?startDate=&endDate=&productId="
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "0ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:45.676] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "0ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:46.699] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/analytics?startDate=&endDate=&productId="
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "1ms"
+    ip: "::1"
+[AdminAuth] Unauthorized access attempt (Invalid token).
+[12:52:46.701] WARN (35468): API Request Client Error
+    type: "ERROR"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 401
+    duration: "1ms"
+    ip: "::1"
+[12:52:56.136] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/admin/auth/login"
+    userAgent: "node"
+    status: 200
+    duration: "2ms"
+    ip: "::1"
+[12:52:56.241] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "29ms"
+    ip: "::1"
+[12:53:00.503] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/admin/analytics?startDate=&endDate=&productId="
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "180ms"
+    ip: "::1"
+[12:54:27.537] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/admin/products/upload"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "1378ms"
+    ip: "::1"
+[12:54:30.023] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 201
+    duration: "1268ms"
+    ip: "::1"
+[12:54:30.185] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/admin/products/"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "31ms"
+    ip: "::1"
+[12:54:36.337] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "32ms"
+    ip: "::1"
+[12:54:36.385] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "0ms"
+    ip: "::1"
+[12:54:36.391] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "0ms"
+    ip: "::1"
+[12:54:37.722] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products/69a6cbf56dfa5a19257e3c01"
+    userAgent: "node"
+    status: 200
+    duration: "31ms"
+    ip: "::1"
+[12:54:37.723] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products/69a6cbf56dfa5a19257e3c01"
+    userAgent: "node"
+    status: 200
+    duration: "27ms"
+    ip: "::1"
+[12:54:37.759] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "32ms"
+    ip: "::1"
+[12:54:37.788] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "1ms"
+    ip: "::1"
+[12:54:37.789] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "2ms"
+    ip: "::1"
+[12:54:54.515] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/checkout"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "812ms"
+    ip: "::1"
+[16:49:12.063] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "36ms"
+    ip: "::1"
+[16:49:12.334] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "3ms"
+    ip: "::1"
+[16:49:13.687] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products/69a6cbf56dfa5a19257e3c01"
+    userAgent: "node"
+    status: 200
+    duration: "33ms"
+    ip: "::1"
+[16:49:13.688] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products/69a6cbf56dfa5a19257e3c01"
+    userAgent: "node"
+    status: 200
+    duration: "29ms"
+    ip: "::1"
+[16:49:13.741] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "49ms"
+    ip: "::1"
+[16:49:13.784] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "0ms"
+    ip: "::1"
+[16:49:13.787] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "1ms"
+    ip: "::1"
+[16:49:46.776] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/checkout"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "682ms"
+    ip: "::1"
+[16:50:50.497] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "34ms"
+    ip: "::1"
+[16:50:50.544] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "1ms"
+    ip: "::1"
+[16:50:50.547] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "0ms"
+    ip: "::1"
