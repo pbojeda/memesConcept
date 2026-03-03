@@ -10,7 +10,10 @@ export const CartDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
 
     const handleCheckout = async () => {
         try {
-            const { clientSecret } = await checkoutService.createSession({ items });
+            const { clientSecret } = await checkoutService.createSession({
+                items,
+                returnUrl: `${window.location.origin}/return?session_id={CHECKOUT_SESSION_ID}`
+            });
             // Integration with Stripe Embedded Checkout would happen here. For MVP we will just redirect to our checkout page if we had a dedicated one, or handle the provider in the Drawer.
             // Since `EmbeddedCheckoutProvider` requires `clientSecret`, we can redirect to a `/checkout?session_id=${session_id}` or similar if we adapt the flow, but let's assume `createCheckoutSession` redirects as it used to in `ProductDetailClient`.
             if (clientSecret) {

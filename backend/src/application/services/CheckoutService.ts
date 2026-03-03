@@ -59,7 +59,7 @@ export class CheckoutService {
                 shipping_address_collection: {
                     allowed_countries: ['US', 'CA', 'ES', 'GB', 'DE', 'FR'],
                 },
-                return_url: `${config.FRONTEND_URL}/return?session_id={CHECKOUT_SESSION_ID}`,
+                return_url: data.returnUrl || `${config.FRONTEND_URL}/return?session_id={CHECKOUT_SESSION_ID}`,
             });
 
             await Order.create({
@@ -71,9 +71,26 @@ export class CheckoutService {
 
             return { clientSecret: session.client_secret, id: session.id };
         } catch (error) {
-            console.error('Stripe Error:', error);
             throw new AppError('Failed to create checkout session', 500);
         }
+    }
+
+    async getSessionOrder(stripeSessionId: string) {
+        const order = await Order.findOne({ stripeSessionId }).populate('items.productId');
+        if (!order) {
+            throw new NotFoundError('Order not found');
+        }
+        return {
+            status: order.status,
+            amountTotal: order.amountTotal,
+            customerDetails: order.customerDetails,
+            items: order.items.map((item: any) => ({
+                productName: item.productId?.name,
+                productImage: item.productId?.images?.[0] || item.productId?.imageUrl,
+                quantity: item.quantity,
+                variant: item.variant
+            }))
+        };
     }
 }
 

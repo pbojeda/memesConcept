@@ -1,8 +1,10 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useCartStore } from "@/store/cartStore";
+import { checkoutService } from "@/services/checkout.service";
+import Image from "next/image";
 
 import Link from "next/link";
 
@@ -10,10 +12,19 @@ function ReturnContent() {
     const searchParams = useSearchParams();
     const sessionId = searchParams.get("session_id");
     const clearCart = useCartStore((state) => state.clearCart);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [order, setOrder] = useState<any>(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (sessionId) {
             clearCart();
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setLoading(true);
+            checkoutService.getOrder(sessionId)
+                .then(setOrder)
+                .catch(console.error)
+                .finally(() => setLoading(false));
         }
     }, [sessionId, clearCart]);
 
@@ -43,7 +54,42 @@ function ReturnContent() {
                     <code className="block text-xs bg-gray-200 p-2 rounded text-gray-700 break-all">{sessionId}</code>
                 </div>
 
-                <p className="text-center text-gray-600">
+                {loading && (
+                    <div className="text-center text-gray-500 py-4">Fetching order details...</div>
+                )}
+
+                {order && order.items && (
+                    <div className="mt-6">
+                        <h2 className="text-lg font-bold mb-4">Items Summary</h2>
+                        <ul className="divide-y divide-gray-200 bg-white border rounded-lg">
+                            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                            {order.items.map((item: any, i: number) => (
+                                <li key={i} className="p-4 flex items-center space-x-4">
+                                    <div className="relative w-16 h-16 bg-gray-100 rounded flex-shrink-0">
+                                        <Image src={item.productImage || '/placeholder.png'} alt={item.productName} fill className="object-cover rounded" />
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold text-gray-900">{item.productName}</p>
+                                        {(item.variant?.size || item.variant?.color) && (
+                                            <p className="text-sm text-gray-500">
+                                                {item.variant.size && `Size: ${item.variant.size} `}
+                                                {item.variant.color && `Color: ${item.variant.color}`}
+                                            </p>
+                                        )}
+                                        <p className="text-sm font-medium">Qty: {item.quantity}</p>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                        {order.amountTotal && (
+                            <div className="mt-4 text-right font-bold text-lg">
+                                Total Paid: ${(order.amountTotal / 100).toFixed(2)}
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                <p className="text-center text-gray-600 mt-6 !text-sm">
                     We will send a confirmation email with your order details shortly.
                 </p>
 

@@ -9,6 +9,7 @@ export interface CreateCheckoutSessionItem {
 
 export interface CreateCheckoutSessionRequest {
     items: CreateCheckoutSessionItem[];
+    returnUrl?: string;
 }
 
 export const checkoutService = {
@@ -16,4 +17,8 @@ export const checkoutService = {
         const { data } = await api.post<CheckoutSessionResponse>("/checkout", payload);
         return data;
     },
+    getOrder: async (sessionId: string) => {
+        const { data } = await api.get(`/checkout/session/${sessionId}`);
+        return data;
+    }
 };

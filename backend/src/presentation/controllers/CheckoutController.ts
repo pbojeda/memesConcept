@@ -20,6 +20,15 @@ export class CheckoutController {
             next(error);
         }
     }
+
+    async getSessionOrder(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const order = await checkoutService.getSessionOrder(req.params.sessionId as string);
+            res.json(order);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 export const checkoutController = new CheckoutController();

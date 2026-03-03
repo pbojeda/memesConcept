@@ -9,6 +9,7 @@ export const checkoutSchema = z.object({
             color: z.string().optional(),
         }).optional(),
     })).min(1, 'At least one item is required'),
+    returnUrl: z.string().url().optional(),
 });
 
 export type CheckoutRequest = z.infer<typeof checkoutSchema>;
