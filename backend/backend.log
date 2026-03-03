@@ -433,3 +433,91 @@
     status: 200
     duration: "812ms"
     ip: "::1"
+[16:49:12.063] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "36ms"
+    ip: "::1"
+[16:49:12.334] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "3ms"
+    ip: "::1"
+[16:49:13.687] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products/69a6cbf56dfa5a19257e3c01"
+    userAgent: "node"
+    status: 200
+    duration: "33ms"
+    ip: "::1"
+[16:49:13.688] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products/69a6cbf56dfa5a19257e3c01"
+    userAgent: "node"
+    status: 200
+    duration: "29ms"
+    ip: "::1"
+[16:49:13.741] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "49ms"
+    ip: "::1"
+[16:49:13.784] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "0ms"
+    ip: "::1"
+[16:49:13.787] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "1ms"
+    ip: "::1"
+[16:49:46.776] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/checkout"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "682ms"
+    ip: "::1"
+[16:50:50.497] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "GET"
+    path: "/products"
+    userAgent: "node"
+    status: 200
+    duration: "34ms"
+    ip: "::1"
+[16:50:50.544] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "1ms"
+    ip: "::1"
+[16:50:50.547] INFO (35468): API Request Processed
+    type: "AUDIT"
+    method: "POST"
+    path: "/analytics/track"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    status: 200
+    duration: "0ms"
+    ip: "::1"

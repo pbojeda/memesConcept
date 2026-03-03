@@ -1,7 +1,7 @@
 # MVP-13: Shopping Cart Feature
 
 ## Status
-PLANNED
+COMPLETED
 
 ## Requirements
 
