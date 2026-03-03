@@ -60,7 +60,11 @@ export class WebhookController {
                     const pfItems = [];
                     for (const item of order.items) {
                         const product = await Product.findById(item.productId);
-                        const selectedVariant = product?.variants.find(
+                        if (!product) {
+                            logger.warn(`Item in order ${order.id} has no product found. Skip.`);
+                            continue;
+                        }
+                        const selectedVariant = product.variants.find(
                             (v) => v.size === item.variant?.size && v.color === item.variant?.color
                         );
 

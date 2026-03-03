@@ -6,10 +6,10 @@ import { useCartStore } from '@/store/cartStore';
 import { CartDrawer } from '../cart/CartDrawer';
 
 export const Header: React.FC = () => {
-    const [isCartOpen, setIsCartOpen] = useState(false);
     // Need to hydrate safely for zustand + nextjs SSR
     const [isMounted, setIsMounted] = useState(false);
-    const totalItems = useCartStore((state) => state.getTotalItems());
+    const { isOpen, setIsOpen, getTotalItems } = useCartStore();
+    const totalItems = getTotalItems();
 
     React.useEffect(() => {
         setIsMounted(true);
@@ -24,7 +24,7 @@ export const Header: React.FC = () => {
                     </Link>
                     <button
                         className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
-                        onClick={() => setIsCartOpen(true)}
+                        onClick={() => setIsOpen(true)}
                         data-testid="cart-icon"
                     >
                         <ShoppingCart className="h-6 w-6" />
@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
                     </button>
                 </div>
             </header>
-            <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+            <CartDrawer isOpen={isOpen} onClose={() => setIsOpen(false)} />
         </>
     );
 };

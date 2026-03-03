@@ -20,7 +20,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         product.variants[0] || null
     );
     const [quantity, setQuantity] = useState(1);
-    const { addItem } = useCartStore();
+    const { addItem, setIsOpen } = useCartStore();
 
     return (
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -58,6 +58,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                             className="w-full text-lg py-6"
                             onClick={() => {
                                 addItem(product, selectedVariant || undefined, quantity);
+                                setIsOpen(true);
                             }}
                             disabled={product.variants?.some(v => v.size || v.color) ? !selectedVariant : false}
                             data-testid="add-to-cart-button"

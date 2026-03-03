@@ -1,0 +1,10 @@
+
+> backend@1.0.0 start
+> node dist/backend/src/index.js
+
+[dotenv@17.3.1] injecting env (11) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+(node:35468) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[17:33:06.828] INFO (35468): Server running at http://localhost:4000
+✅ Connected to MongoDB (Attempt 1)
