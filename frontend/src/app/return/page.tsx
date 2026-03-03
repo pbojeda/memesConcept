@@ -1,13 +1,21 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
+import { useCartStore } from "@/store/cartStore";
 
 import Link from "next/link";
 
 function ReturnContent() {
     const searchParams = useSearchParams();
     const sessionId = searchParams.get("session_id");
+    const clearCart = useCartStore((state) => state.clearCart);
+
+    useEffect(() => {
+        if (sessionId) {
+            clearCart();
+        }
+    }, [sessionId, clearCart]);
 
     if (!sessionId) {
         return (
