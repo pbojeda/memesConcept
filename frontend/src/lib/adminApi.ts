@@ -21,6 +21,18 @@ api.interceptors.request.use(async (config) => {
     return config;
 });
 
+api.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        if (error.response?.status === 401) {
+            // Token might be expired or invalid on the backend, force logout
+            const { signOut } = await import('next-auth/react');
+            signOut({ callbackUrl: '/admin/login' });
+        }
+        return Promise.reject(error);
+    }
+);
+
 export const adminApi = {
     getProducts: async () => {
         const response = await api.get<Product[]>('/');

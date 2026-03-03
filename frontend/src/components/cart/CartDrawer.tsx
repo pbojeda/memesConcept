@@ -27,10 +27,9 @@ export const CartDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 overflow-hidden" data-testid="cart-drawer">
-            <div className="absolute inset-0 bg-black bg-opacity-50 transition-opacity" onClick={onClose} />
+        <div className="fixed inset-0 z-50 overflow-hidden pointer-events-none" data-testid="cart-drawer">
             <div className="absolute inset-y-0 right-0 max-w-full flex">
-                <div className="relative w-screen max-w-md bg-white shadow-xl flex flex-col pointer-events-auto">
+                <div className="relative w-screen max-w-md bg-white shadow-xl flex flex-col pointer-events-auto border-l border-gray-200">
                     <div className="p-4 flex items-center justify-between border-b">
                         <h2 className="text-lg font-bold flex items-center">
                             <ShoppingCart className="mr-2" /> Shopping Cart
