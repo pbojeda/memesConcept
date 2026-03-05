@@ -120,12 +120,34 @@ export class AnalyticsService {
             }
         ]);
 
+        // 5. Time-series data (Revenue and Orders by Day)
+        const revenueOverTime = await Order.aggregate([
+            { $match: OrderMatch },
+            {
+                $group: {
+                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+                    totalOrders: { $sum: 1 },
+                    totalRevenue: { $sum: '$amountTotal' }
+                }
+            },
+            { $sort: { '_id': 1 } },
+            {
+                $project: {
+                    _id: 0,
+                    date: '$_id',
+                    orders: '$totalOrders',
+                    revenue: { $divide: ['$totalRevenue', 100] } // Convert from cents
+                }
+            }
+        ]);
+
         return {
             totalRevenue,
             totalOrders,
             topProducts,
             funnelMetrics,
-            trafficSources
+            trafficSources,
+            revenueOverTime
         };
     }
 }

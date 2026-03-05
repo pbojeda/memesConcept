@@ -5,6 +5,9 @@ import { adminApi } from '@/lib/adminApi';
 import { useState } from 'react';
 import { DollarSign, ShoppingCart, Activity, MousePointerClick, Filter } from 'lucide-react';
 import { Product } from '@/schemas/product';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
+
+const COLORS = ['#8b5cf6', '#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
 
 export function AnalyticsDashboard() {
     const [startDate, setStartDate] = useState<string>('');
@@ -72,6 +75,32 @@ export function AnalyticsDashboard() {
                 ))}
             </div>
 
+            {/* Revenue / Orders Chart */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
+                <h3 className="text-lg font-bold mb-6 text-gray-800">Revenue & Orders Over Time</h3>
+                <div className="h-[300px] w-full">
+                    {analytics.revenueOverTime && analytics.revenueOverTime.length > 0 ? (
+                        <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={analytics.revenueOverTime} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+                                <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} dy={10} />
+                                <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} tickFormatter={(value) => `$${value}`} />
+                                <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} />
+                                <RechartsTooltip
+                                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                />
+                                <Line yAxisId="left" type="monotone" dataKey="revenue" name="Revenue" stroke="#8b5cf6" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
+                                <Line yAxisId="right" type="monotone" dataKey="orders" name="Orders" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    ) : (
+                        <div className="h-full flex items-center justify-center text-gray-400">
+                            No data for this period
+                        </div>
+                    )}
+                </div>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Funnel */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
@@ -88,24 +117,28 @@ export function AnalyticsDashboard() {
                     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                         <h3 className="text-lg font-bold mb-6 text-gray-800">Top Products</h3>
                         {analytics.topProducts.length > 0 ? (
-                            <table className="w-full text-left">
-                                <thead>
-                                    <tr className="text-sm text-gray-500 border-b">
-                                        <th className="pb-3 font-medium">Product Name</th>
-                                        <th className="pb-3 text-right font-medium">Sales Count</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {analytics.topProducts.map((p: { productName: string; salesCount: number }, i: number) => (
-                                        <tr key={i} className="border-b last:border-0 hover:bg-gray-50">
-                                            <td className="py-3 text-gray-800">{p.productName}</td>
-                                            <td className="py-3 text-right font-medium text-gray-900">{p.salesCount}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                            <div className="h-[250px] w-full mt-4">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={analytics.topProducts} margin={{ top: 0, right: 0, bottom: 0, left: -20 }}>
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+                                        <XAxis dataKey="productName" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#6B7280' }} interval={0}
+                                            tickFormatter={(val) => val.length > 10 ? val.substring(0, 10) + '...' : val} />
+                                        <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} allowDecimals={false} />
+                                        <RechartsTooltip
+                                            cursor={{ fill: '#F3F4F6' }}
+                                            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                        />
+                                        <Bar dataKey="salesCount" name="Sales" radius={[4, 4, 0, 0]}>
+                                            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                                            {analytics.topProducts.map((_: any, index: number) => (
+                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                            ))}
+                                        </Bar>
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
                         ) : (
-                            <p className="text-gray-500 text-sm">No sales data available yet.</p>
+                            <p className="text-gray-500 text-sm flex items-center h-[250px] justify-center">No sales data available yet.</p>
                         )}
                     </div>
                 )}
