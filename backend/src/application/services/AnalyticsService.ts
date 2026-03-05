@@ -28,7 +28,7 @@ export class AnalyticsService {
 
         if (filters.productId) {
             TrackingMatch.productId = filters.productId;
-            OrderMatch.productId = new mongoose.Types.ObjectId(filters.productId);
+            OrderMatch['items.productId'] = new mongoose.Types.ObjectId(filters.productId);
         }
 
         // 1. Core Order Aggregations (Revenue, Total Orders)
@@ -52,10 +52,11 @@ export class AnalyticsService {
         if (!filters.productId) { // Only calculate "top products" if we aren't filtering to 1 product
             topProducts = await Order.aggregate([
                 { $match: OrderMatch },
+                { $unwind: '$items' },
                 {
                     $group: {
-                        _id: '$productId',
-                        salesCount: { $sum: 1 }
+                        _id: '$items.productId',
+                        salesCount: { $sum: '$items.quantity' }
                     }
                 },
                 { $sort: { salesCount: -1 } },
