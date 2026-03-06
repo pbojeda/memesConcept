@@ -63,7 +63,7 @@
 - [ ] **Admin Analytics (Dashboard)**
   - [x] Ticket: [MVP-10.1-analytics-bugfix.md](docs/tickets/MVP-10.1-analytics-bugfix.md) (Fix Multi-item Aggregation)
   - [x] Ticket: [MVP-10.2-analytics-charts.md](docs/tickets/MVP-10.2-analytics-charts.md) (Recharts Time-series Visuals)
-  - [ ] Ticket: [MVP-10.3-analytics-funnel.md](docs/tickets/MVP-10.3-analytics-funnel.md) (Add to Cart Funnel Metrics)
+  - [x] Ticket: [MVP-10.3-analytics-funnel.md](docs/tickets/MVP-10.3-analytics-funnel.md) (Add to Cart Funnel Metrics)
   - [ ] Ticket: [MVP-10.4-analytics-export.md](docs/tickets/MVP-10.4-analytics-export.md) (CSV Downloader)
 
 - [x] **Admin Authentication & Robustness**

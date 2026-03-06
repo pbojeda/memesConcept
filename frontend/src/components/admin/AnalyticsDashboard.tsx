@@ -107,6 +107,7 @@ export function AnalyticsDashboard() {
                     <h3 className="text-lg font-bold mb-6 text-gray-800">Sales Funnel</h3>
                     <div className="space-y-4">
                         <FunnelStep label="Page Views" value={analytics.funnelMetrics.pageViews} max={analytics.funnelMetrics.pageViews} color="bg-blue-100 text-blue-800" barColor="bg-blue-500" />
+                        <FunnelStep label="Added to Cart" value={analytics.funnelMetrics.addedToCart ?? 0} max={analytics.funnelMetrics.pageViews} color="bg-sky-100 text-sky-800" barColor="bg-sky-500" />
                         <FunnelStep label="Checkouts Initiated" value={analytics.funnelMetrics.checkoutsInitiated} max={analytics.funnelMetrics.pageViews} color="bg-indigo-100 text-indigo-800" barColor="bg-indigo-500" />
                         <FunnelStep label="Purchases Completed" value={analytics.funnelMetrics.purchasesCompleted} max={analytics.funnelMetrics.pageViews} color="bg-violet-100 text-violet-800" barColor="bg-violet-500" />
                     </div>

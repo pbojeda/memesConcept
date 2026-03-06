@@ -10,6 +10,7 @@ import { VariantSelector } from "./VariantSelector";
 import { Button } from '@/components/ui/button';
 import { QuantitySelector } from "./QuantitySelector";
 import { useCartStore } from "@/store/cartStore";
+import { adminApi } from "@/lib/adminApi";
 
 interface ProductDetailClientProps {
     product: Product;
@@ -59,6 +60,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                             onClick={() => {
                                 addItem(product, selectedVariant || undefined, quantity);
                                 setIsOpen(true);
+                                adminApi.track({ eventType: 'add_to_cart', productId: product.id }).catch(console.error);
                             }}
                             disabled={product.variants?.some(v => v.size || v.color) ? !selectedVariant : false}
                             data-testid="add-to-cart-button"

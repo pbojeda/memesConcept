@@ -84,6 +84,7 @@ export class AnalyticsService {
         const pageViews = await TrackingEvent.countDocuments({ ...TrackingMatch, eventType: 'page_view' });
         const checkoutsInitiated = await TrackingEvent.countDocuments({ ...TrackingMatch, eventType: 'initiate_checkout' });
         const view_product = await TrackingEvent.countDocuments({ ...TrackingMatch, eventType: 'view_product' });
+        const addedToCart = await TrackingEvent.countDocuments({ ...TrackingMatch, eventType: 'add_to_cart' });
 
         // Sum total views (page limits mostly view_product for conversions)
         const totalViews = filters.productId ? view_product : pageViews;
@@ -95,6 +96,7 @@ export class AnalyticsService {
 
         const funnelMetrics = {
             pageViews: totalViews,
+            addedToCart,
             checkoutsInitiated,
             purchasesCompleted: totalOrders,
             conversionRate

@@ -8,7 +8,7 @@ export class AnalyticsController {
             const { eventType, productId, source } = req.body;
 
             // Simple validation
-            if (!['page_view', 'view_product', 'initiate_checkout'].includes(eventType)) {
+            if (!['page_view', 'view_product', 'add_to_cart', 'initiate_checkout'].includes(eventType)) {
                 res.status(400).json({ error: 'Invalid eventType' });
                 return;
             }
