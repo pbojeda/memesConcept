@@ -61,9 +61,10 @@
   - [x] E2E Tests: shopping-cart cypress integration
 
 - [ ] **Admin Analytics (Dashboard)**
-  - [ ] Ticket: [MVP-10-analytics-dashboard.md](docs/tickets/MVP-10-analytics-dashboard.md)
-  - [ ] Backend: Analytics aggregation endpoint
-  - [ ] Frontend: Dashboard UI with basic charts
+  - [x] Ticket: [MVP-10.1-analytics-bugfix.md](docs/tickets/MVP-10.1-analytics-bugfix.md) (Fix Multi-item Aggregation)
+  - [x] Ticket: [MVP-10.2-analytics-charts.md](docs/tickets/MVP-10.2-analytics-charts.md) (Recharts Time-series Visuals)
+  - [x] Ticket: [MVP-10.3-analytics-funnel.md](docs/tickets/MVP-10.3-analytics-funnel.md) (Add to Cart Funnel Metrics)
+  - [x] Ticket: [MVP-10.4-analytics-export.md](docs/tickets/MVP-10.4-analytics-export.md) (CSV Downloader)
 
 - [x] **Admin Authentication & Robustness**
   - [x] Ticket: [MVP-11-admin-auth.md](docs/tickets/MVP-11-admin-auth.md)

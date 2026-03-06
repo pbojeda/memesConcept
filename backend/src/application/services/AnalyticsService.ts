@@ -28,7 +28,7 @@ export class AnalyticsService {
 
         if (filters.productId) {
             TrackingMatch.productId = filters.productId;
-            OrderMatch.productId = new mongoose.Types.ObjectId(filters.productId);
+            OrderMatch['items.productId'] = new mongoose.Types.ObjectId(filters.productId);
         }
 
         // 1. Core Order Aggregations (Revenue, Total Orders)
@@ -52,10 +52,11 @@ export class AnalyticsService {
         if (!filters.productId) { // Only calculate "top products" if we aren't filtering to 1 product
             topProducts = await Order.aggregate([
                 { $match: OrderMatch },
+                { $unwind: '$items' },
                 {
                     $group: {
-                        _id: '$productId',
-                        salesCount: { $sum: 1 }
+                        _id: '$items.productId',
+                        salesCount: { $sum: '$items.quantity' }
                     }
                 },
                 { $sort: { salesCount: -1 } },
@@ -83,6 +84,7 @@ export class AnalyticsService {
         const pageViews = await TrackingEvent.countDocuments({ ...TrackingMatch, eventType: 'page_view' });
         const checkoutsInitiated = await TrackingEvent.countDocuments({ ...TrackingMatch, eventType: 'initiate_checkout' });
         const view_product = await TrackingEvent.countDocuments({ ...TrackingMatch, eventType: 'view_product' });
+        const addedToCart = await TrackingEvent.countDocuments({ ...TrackingMatch, eventType: 'add_to_cart' });
 
         // Sum total views (page limits mostly view_product for conversions)
         const totalViews = filters.productId ? view_product : pageViews;
@@ -94,6 +96,7 @@ export class AnalyticsService {
 
         const funnelMetrics = {
             pageViews: totalViews,
+            addedToCart,
             checkoutsInitiated,
             purchasesCompleted: totalOrders,
             conversionRate
@@ -119,12 +122,34 @@ export class AnalyticsService {
             }
         ]);
 
+        // 5. Time-series data (Revenue and Orders by Day)
+        const revenueOverTime = await Order.aggregate([
+            { $match: OrderMatch },
+            {
+                $group: {
+                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+                    totalOrders: { $sum: 1 },
+                    totalRevenue: { $sum: '$amountTotal' }
+                }
+            },
+            { $sort: { '_id': 1 } },
+            {
+                $project: {
+                    _id: 0,
+                    date: '$_id',
+                    orders: '$totalOrders',
+                    revenue: { $divide: ['$totalRevenue', 100] } // Convert from cents
+                }
+            }
+        ]);
+
         return {
             totalRevenue,
             totalOrders,
             topProducts,
             funnelMetrics,
-            trafficSources
+            trafficSources,
+            revenueOverTime
         };
     }
 }

@@ -78,6 +78,13 @@ export const adminApi = {
         return data.url;
     },
 
+    track: async (data: { eventType: string, productId?: string, source?: string }) => {
+        const response = await api.post('/analytics', data, {
+            baseURL: process.env.NEXT_PUBLIC_API_URL
+        });
+        return response.data;
+    },
+
     getAnalytics: async (filters?: { startDate?: string; endDate?: string; productId?: string }) => {
         // Because baseURL is set to /products, we have to override it or just use full path 
         // since baseURL works like string concatenation if not absolute. Let's just create a new config override.

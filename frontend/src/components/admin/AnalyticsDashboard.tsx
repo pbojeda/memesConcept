@@ -3,8 +3,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { adminApi } from '@/lib/adminApi';
 import { useState } from 'react';
-import { DollarSign, ShoppingCart, Activity, MousePointerClick, Filter } from 'lucide-react';
+import { DollarSign, ShoppingCart, Activity, MousePointerClick, Filter, Download } from 'lucide-react';
 import { Product } from '@/schemas/product';
+import { Button } from '@/components/ui/button';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
+
+const COLORS = ['#8b5cf6', '#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
 
 export function AnalyticsDashboard() {
     const [startDate, setStartDate] = useState<string>('');
@@ -30,8 +34,52 @@ export function AnalyticsDashboard() {
         { title: 'Conversion Rate', value: `${analytics.funnelMetrics.conversionRate}%`, icon: MousePointerClick },
     ];
 
+    const generateCSV = () => {
+        if (!analytics) return;
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Metric,Value\n";
+        csvContent += `Total Revenue,${analytics.totalRevenue}\n`;
+        csvContent += `Total Orders,${analytics.totalOrders}\n`;
+        csvContent += `Page Views,${analytics.funnelMetrics.pageViews}\n`;
+        csvContent += `Added to Cart,${analytics.funnelMetrics.addedToCart ?? 0}\n`;
+        csvContent += `Checkouts Initiated,${analytics.funnelMetrics.checkoutsInitiated}\n`;
+        csvContent += `Purchases Completed,${analytics.funnelMetrics.purchasesCompleted}\n`;
+        csvContent += `Conversion Rate %,${analytics.funnelMetrics.conversionRate}\n\n`;
+
+        if (analytics.revenueOverTime && analytics.revenueOverTime.length > 0) {
+            csvContent += "Date,Revenue,Orders\n";
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            analytics.revenueOverTime.forEach((r: any) => {
+                csvContent += `${r.date},${r.revenue},${r.orders}\n`;
+            });
+            csvContent += "\n";
+        }
+
+        if (analytics.topProducts && analytics.topProducts.length > 0) {
+            csvContent += "Top Product,Sales\n";
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            analytics.topProducts.forEach((p: any) => {
+                csvContent += `${p.productName},${p.salesCount}\n`;
+            });
+        }
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `analytics_export_${new Date().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <div className="space-y-8">
+            <div className="flex justify-end">
+                <Button variant="outline" onClick={generateCSV} className="bg-white">
+                    <Download className="mr-2 h-4 w-4" />
+                    Export CSV
+                </Button>
+            </div>
             {/* Filters */}
             <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-wrap gap-4 items-end">
                 <div className="flex items-center gap-2 text-gray-500 mr-2">
@@ -72,12 +120,39 @@ export function AnalyticsDashboard() {
                 ))}
             </div>
 
+            {/* Revenue / Orders Chart */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
+                <h3 className="text-lg font-bold mb-6 text-gray-800">Revenue & Orders Over Time</h3>
+                <div className="h-[300px] w-full">
+                    {analytics.revenueOverTime && analytics.revenueOverTime.length > 0 ? (
+                        <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={analytics.revenueOverTime} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+                                <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} dy={10} />
+                                <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} tickFormatter={(value) => `$${value}`} />
+                                <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} />
+                                <RechartsTooltip
+                                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                />
+                                <Line yAxisId="left" type="monotone" dataKey="revenue" name="Revenue" stroke="#8b5cf6" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
+                                <Line yAxisId="right" type="monotone" dataKey="orders" name="Orders" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    ) : (
+                        <div className="h-full flex items-center justify-center text-gray-400">
+                            No data for this period
+                        </div>
+                    )}
+                </div>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Funnel */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                     <h3 className="text-lg font-bold mb-6 text-gray-800">Sales Funnel</h3>
                     <div className="space-y-4">
                         <FunnelStep label="Page Views" value={analytics.funnelMetrics.pageViews} max={analytics.funnelMetrics.pageViews} color="bg-blue-100 text-blue-800" barColor="bg-blue-500" />
+                        <FunnelStep label="Added to Cart" value={analytics.funnelMetrics.addedToCart ?? 0} max={analytics.funnelMetrics.pageViews} color="bg-sky-100 text-sky-800" barColor="bg-sky-500" />
                         <FunnelStep label="Checkouts Initiated" value={analytics.funnelMetrics.checkoutsInitiated} max={analytics.funnelMetrics.pageViews} color="bg-indigo-100 text-indigo-800" barColor="bg-indigo-500" />
                         <FunnelStep label="Purchases Completed" value={analytics.funnelMetrics.purchasesCompleted} max={analytics.funnelMetrics.pageViews} color="bg-violet-100 text-violet-800" barColor="bg-violet-500" />
                     </div>
@@ -88,24 +163,28 @@ export function AnalyticsDashboard() {
                     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                         <h3 className="text-lg font-bold mb-6 text-gray-800">Top Products</h3>
                         {analytics.topProducts.length > 0 ? (
-                            <table className="w-full text-left">
-                                <thead>
-                                    <tr className="text-sm text-gray-500 border-b">
-                                        <th className="pb-3 font-medium">Product Name</th>
-                                        <th className="pb-3 text-right font-medium">Sales Count</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {analytics.topProducts.map((p: { productName: string; salesCount: number }, i: number) => (
-                                        <tr key={i} className="border-b last:border-0 hover:bg-gray-50">
-                                            <td className="py-3 text-gray-800">{p.productName}</td>
-                                            <td className="py-3 text-right font-medium text-gray-900">{p.salesCount}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                            <div className="h-[250px] w-full mt-4">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={analytics.topProducts} margin={{ top: 0, right: 0, bottom: 0, left: -20 }}>
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+                                        <XAxis dataKey="productName" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#6B7280' }} interval={0}
+                                            tickFormatter={(val) => val.length > 10 ? val.substring(0, 10) + '...' : val} />
+                                        <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} allowDecimals={false} />
+                                        <RechartsTooltip
+                                            cursor={{ fill: '#F3F4F6' }}
+                                            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                        />
+                                        <Bar dataKey="salesCount" name="Sales" radius={[4, 4, 0, 0]}>
+                                            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                                            {analytics.topProducts.map((_: any, index: number) => (
+                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                            ))}
+                                        </Bar>
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
                         ) : (
-                            <p className="text-gray-500 text-sm">No sales data available yet.</p>
+                            <p className="text-gray-500 text-sm flex items-center h-[250px] justify-center">No sales data available yet.</p>
                         )}
                     </div>
                 )}
