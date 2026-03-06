@@ -1,7 +1,7 @@
 # MVP-10.4: Analytics CSV Export
 
 ## Status
-PLANNED
+COMPLETED
 
 ## Requirements
 Add a simple export functionality to download the aggregated dashboard metrics as a `.csv` file.

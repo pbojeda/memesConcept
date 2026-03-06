@@ -3,8 +3,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { adminApi } from '@/lib/adminApi';
 import { useState } from 'react';
-import { DollarSign, ShoppingCart, Activity, MousePointerClick, Filter } from 'lucide-react';
+import { DollarSign, ShoppingCart, Activity, MousePointerClick, Filter, Download } from 'lucide-react';
 import { Product } from '@/schemas/product';
+import { Button } from '@/components/ui/button';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
 
 const COLORS = ['#8b5cf6', '#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
@@ -33,8 +34,52 @@ export function AnalyticsDashboard() {
         { title: 'Conversion Rate', value: `${analytics.funnelMetrics.conversionRate}%`, icon: MousePointerClick },
     ];
 
+    const generateCSV = () => {
+        if (!analytics) return;
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Metric,Value\n";
+        csvContent += `Total Revenue,${analytics.totalRevenue}\n`;
+        csvContent += `Total Orders,${analytics.totalOrders}\n`;
+        csvContent += `Page Views,${analytics.funnelMetrics.pageViews}\n`;
+        csvContent += `Added to Cart,${analytics.funnelMetrics.addedToCart ?? 0}\n`;
+        csvContent += `Checkouts Initiated,${analytics.funnelMetrics.checkoutsInitiated}\n`;
+        csvContent += `Purchases Completed,${analytics.funnelMetrics.purchasesCompleted}\n`;
+        csvContent += `Conversion Rate %,${analytics.funnelMetrics.conversionRate}\n\n`;
+
+        if (analytics.revenueOverTime && analytics.revenueOverTime.length > 0) {
+            csvContent += "Date,Revenue,Orders\n";
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            analytics.revenueOverTime.forEach((r: any) => {
+                csvContent += `${r.date},${r.revenue},${r.orders}\n`;
+            });
+            csvContent += "\n";
+        }
+
+        if (analytics.topProducts && analytics.topProducts.length > 0) {
+            csvContent += "Top Product,Sales\n";
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            analytics.topProducts.forEach((p: any) => {
+                csvContent += `${p.productName},${p.salesCount}\n`;
+            });
+        }
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `analytics_export_${new Date().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <div className="space-y-8">
+            <div className="flex justify-end">
+                <Button variant="outline" onClick={generateCSV} className="bg-white">
+                    <Download className="mr-2 h-4 w-4" />
+                    Export CSV
+                </Button>
+            </div>
             {/* Filters */}
             <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-wrap gap-4 items-end">
                 <div className="flex items-center gap-2 text-gray-500 mr-2">
