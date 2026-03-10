@@ -66,6 +66,9 @@
   - [x] Ticket: [MVP-10.3-analytics-funnel.md](docs/tickets/MVP-10.3-analytics-funnel.md) (Add to Cart Funnel Metrics)
   - [x] Ticket: [MVP-10.4-analytics-export.md](docs/tickets/MVP-10.4-analytics-export.md) (CSV Downloader)
 
+- [x] **Global Currency Update**
+  - [x] Ticket: [MVP-14-currency-eur.md](docs/tickets/MVP-14-currency-eur.md) (Migrate USD to EUR)
+
 - [x] **Admin Authentication & Robustness**
   - [x] Ticket: [MVP-11-admin-auth.md](docs/tickets/MVP-11-admin-auth.md)
   - [x] Backend: Replace static Key with JWT/Session validation

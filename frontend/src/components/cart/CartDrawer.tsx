@@ -58,7 +58,7 @@ export const CartDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                     <div className="p-4 border-t bg-gray-50">
                         <div className="flex justify-between font-bold text-xl mb-4">
                             <span>Total</span>
-                            <span>${getTotalPrice().toFixed(2)}</span>
+                            <span>€{getTotalPrice().toFixed(2)}</span>
                         </div>
                         <Button
                             className="w-full py-6 text-lg"
