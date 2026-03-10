@@ -74,9 +74,13 @@
   - [x] Backend: Replace static Key with JWT/Session validation
   - [x] Frontend: NextAuth + Layout Middleware protection
 
-- [ ] **Customer Notifications**
-  - [ ] Ticket: [MVP-12-customer-emails.md](docs/tickets/MVP-12-customer-emails.md)
-  - [ ] Decide: Stripe Native vs Custom Resend API logic
+- [x] **Customer Notifications**
+  - [x] Ticket: [MVP-12-customer-notifications.md](docs/tickets/MVP-12-customer-notifications.md)
+  - [x] Decision: Use Stripe/Printful native transactional emails.
+
+- [ ] **Monitoring & Alerts**
+  - [ ] Ticket: [MVP-15-monitoring.md](docs/tickets/MVP-15-monitoring.md)
+  - [ ] Implement Sentry Error Tracking and UptimeRobot (/api/health) Alerts
 
 - [ ] **Deployment Analysis & Verification**
   - [x] Analyze Deployment Options (Vercel, VPS, etc.)
