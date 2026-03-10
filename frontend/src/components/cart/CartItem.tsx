@@ -26,7 +26,7 @@ export const CartItem: React.FC<{ item: CartItemType }> = ({ item }) => {
                         quantity={item.quantity}
                         onChange={(q) => updateQuantity(item.productId, q, item.variant?.printfulVariantId)}
                     />
-                    <p className="font-medium">${(item.product.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-medium">€{(item.product.price * item.quantity).toFixed(2)}</p>
                 </div>
             </div>
             <Button

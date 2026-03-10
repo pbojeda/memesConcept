@@ -38,7 +38,7 @@ export async function SimilarProducts({ currentProductId }: { currentProductId: 
                                     {product.name}
                                 </h3>
                             </div>
-                            <p className="text-sm font-medium text-gray-900">${product.price}</p>
+                            <p className="text-sm font-medium text-gray-900">€{product.price}</p>
                         </div>
                     </Link>
                 ))}

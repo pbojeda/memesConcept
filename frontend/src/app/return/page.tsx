@@ -83,7 +83,7 @@ function ReturnContent() {
                         </ul>
                         {order.amountTotal && (
                             <div className="mt-4 text-right font-bold text-lg">
-                                Total Paid: ${(order.amountTotal / 100).toFixed(2)}
+                                Total Paid: €{(order.amountTotal / 100).toFixed(2)}
                             </div>
                         )}
                     </div>

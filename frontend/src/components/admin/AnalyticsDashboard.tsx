@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { adminApi } from '@/lib/adminApi';
 import { useState } from 'react';
-import { DollarSign, ShoppingCart, Activity, MousePointerClick, Filter, Download } from 'lucide-react';
+import { Euro, ShoppingCart, Activity, MousePointerClick, Filter, Download } from 'lucide-react';
 import { Product } from '@/schemas/product';
 import { Button } from '@/components/ui/button';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
@@ -28,7 +28,7 @@ export function AnalyticsDashboard() {
     if (isLoading || !analytics) return <div className="p-8 text-center text-gray-500 animate-pulse">Loading Analytics...</div>;
 
     const stats = [
-        { title: 'Total Revenue', value: `$${analytics.totalRevenue.toFixed(2)}`, icon: DollarSign },
+        { title: 'Total Revenue', value: `€${analytics.totalRevenue.toFixed(2)}`, icon: Euro },
         { title: 'Total Orders', value: analytics.totalOrders, icon: ShoppingCart },
         { title: 'Page Views', value: analytics.funnelMetrics.pageViews, icon: Activity },
         { title: 'Conversion Rate', value: `${analytics.funnelMetrics.conversionRate}%`, icon: MousePointerClick },
@@ -129,7 +129,7 @@ export function AnalyticsDashboard() {
                             <LineChart data={analytics.revenueOverTime} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
                                 <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} dy={10} />
-                                <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} tickFormatter={(value) => `$${value}`} />
+                                <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} tickFormatter={(value) => `€${value}`} />
                                 <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} />
                                 <RechartsTooltip
                                     contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
