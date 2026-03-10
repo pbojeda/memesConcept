@@ -60,7 +60,7 @@ export default function ProductsPage() {
                                     <ProductImage product={product} className="h-10 w-10 rounded object-cover border" />
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap font-medium">{product.name}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">${product.price.toFixed(2)}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">€{product.price.toFixed(2)}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div className="flex justify-end gap-2">
                                         <Link href={`/admin/products/${product.id}/edit`}>
