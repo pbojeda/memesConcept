@@ -7,13 +7,13 @@ export function Footer() {
                 <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
                     <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-8 md:order-2">
                         <Link href="/privacy" className="text-sm font-medium text-gray-500 hover:text-black hover:underline transition-colors">
-                            Privacy Policy
+                            Política de Privacidad
                         </Link>
                         <Link href="/terms" className="text-sm font-medium text-gray-500 hover:text-black hover:underline transition-colors">
-                            Terms of Service
+                            Términos y Condiciones
                         </Link>
                         <a href="mailto:contact@memesconcept.com" className="text-sm font-medium text-gray-500 hover:text-black hover:underline transition-colors">
-                            Contact
+                            Contacto
                         </a>
                     </div>
                     <div className="md:order-1">

@@ -38,6 +38,8 @@
   - [x] Feature: Analytics Integration (PostHog) <!-- id: 25 -->
   - [x] Feature: Footer & Legal Pages <!-- id: 26 -->
   - [x] Feature: Cookie Banner <!-- id: 27 -->
+  - [x] Ticket: [MVP-16-spanish-translation.md](docs/tickets/MVP-16-spanish-translation.md) <!-- id: 28 -->
+  - [x] Polish: Translate UI to Spanish & Fix Hover states <!-- id: 29 -->
 
 - [x] **Admin & Cloudinary**
   - [x] Ticket: [MVP-04-admin-dashboard.md](docs/tickets/MVP-04-admin-dashboard.md)

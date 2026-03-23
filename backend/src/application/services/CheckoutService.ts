@@ -56,6 +56,7 @@ export class CheckoutService {
                 ui_mode: 'embedded',
                 line_items: lineItems,
                 mode: 'payment',
+                locale: 'es',
                 shipping_address_collection: {
                     allowed_countries: ['US', 'CA', 'ES', 'GB', 'DE', 'FR'],
                 },

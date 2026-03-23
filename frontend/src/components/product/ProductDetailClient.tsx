@@ -25,9 +25,9 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
     return (
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-            <Link href="/" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-8 transition-colors">
+            <Link href="/" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-8 transition-colors cursor-pointer">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to all memes
+                Volver al inicio
             </Link>
 
             <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
@@ -51,12 +51,12 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
                     <div className="mt-10 flex flex-col space-y-4">
                         <div className="flex items-center space-x-4">
-                            <span className="font-medium">Quantity:</span>
+                            <span className="font-medium">Cantidad:</span>
                             <QuantitySelector quantity={quantity} onChange={setQuantity} />
                         </div>
                         <Button
                             size="lg"
-                            className="w-full text-lg py-6"
+                            className="w-full text-lg py-6 cursor-pointer"
                             onClick={() => {
                                 addItem(product, selectedVariant || undefined, quantity);
                                 setIsOpen(true);
@@ -65,7 +65,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                             disabled={product.variants?.some(v => v.size || v.color) ? !selectedVariant : false}
                             data-testid="add-to-cart-button"
                         >
-                            Add to Cart
+                            Añadir al carrito
                         </Button>
                     </div>
                 </div>

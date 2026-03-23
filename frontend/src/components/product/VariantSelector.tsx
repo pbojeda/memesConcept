@@ -11,6 +11,20 @@ interface VariantSelectorProps {
 }
 
 export function VariantSelector({ variants, selectedVariant, onSelect }: VariantSelectorProps) {
+
+    // Spanish translation map for colors
+    const colorTranslations: Record<string, string> = {
+        'Black': 'Negro',
+        'White': 'Blanco',
+        'Navy': 'Azul Marino',
+        'Red': 'Rojo',
+        'Blue': 'Azul',
+        'Grey': 'Gris',
+        'Dark Heather': 'Gris oscuro',
+        'Sport Grey': 'Gris claro',
+    };
+    const translateColor = (color: string) => colorTranslations[color] || color;
+
     // Collect all unique sizes and colors from ALL variants, regardless of stock
     const sizes = Array.from(new Set(variants.map(v => v.size).filter(Boolean))) as string[];
     const colors = Array.from(new Set(variants.map(v => v.color).filter(Boolean))) as string[];
@@ -51,7 +65,7 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Variant
             {hasSizes && (
                 <div>
                     <h3 className="text-sm font-medium text-gray-900">
-                        Size <span className="text-gray-500 text-xs font-normal ml-2">{selectedSize || "Select..."}</span>
+                        Talla <span className="text-gray-500 text-xs font-normal ml-2">{selectedSize || "Seleccionar..."}</span>
                     </h3>
                     <div className="mt-2 flex flex-wrap gap-2">
                         {sizes.map((size) => {
@@ -64,10 +78,10 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Variant
                                     className={cn(
                                         "border rounded-md px-3 py-1 text-sm transition-all relative overflow-hidden",
                                         selectedSize === size
-                                            ? "border-black bg-black text-white"
+                                            ? "border-black bg-black text-white cursor-pointer"
                                             : isAvailable
-                                                ? "border-gray-200 hover:border-gray-300 text-gray-700 hover:bg-gray-50"
-                                                : "border-gray-100 bg-gray-50 text-gray-400 opacity-60"
+                                                ? "border-gray-200 hover:border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer"
+                                                : "border-gray-100 bg-gray-50 text-gray-400 opacity-60 cursor-not-allowed"
                                     )}
                                 >
                                     {size}
@@ -84,7 +98,7 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Variant
             {hasColors && (
                 <div>
                     <h3 className="text-sm font-medium text-gray-900">
-                        Color <span className="text-gray-500 text-xs font-normal ml-2">{selectedColor || "Select..."}</span>
+                        Color <span className="text-gray-500 text-xs font-normal ml-2">{selectedColor ? translateColor(selectedColor) : "Seleccionar..."}</span>
                     </h3>
                     <div className="mt-2 flex flex-wrap gap-2">
                         {colors.map((color) => {
@@ -97,13 +111,13 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Variant
                                     className={cn(
                                         "border rounded-md px-3 py-1 text-sm transition-all relative overflow-hidden",
                                         selectedColor === color
-                                            ? "border-black bg-black text-white"
+                                            ? "border-black bg-black text-white cursor-pointer"
                                             : isAvailable
-                                                ? "border-gray-200 hover:border-gray-300 text-gray-700 hover:bg-gray-50"
-                                                : "border-gray-100 bg-gray-50 text-gray-400 opacity-60"
+                                                ? "border-gray-200 hover:border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer"
+                                                : "border-gray-100 bg-gray-50 text-gray-400 opacity-60 cursor-not-allowed"
                                     )}
                                 >
-                                    {color}
+                                    {translateColor(color)}
                                     {!isAvailable && (
                                         <div className="absolute top-1/2 left-0 w-full border-t border-gray-300 -rotate-12 transform-gpu"></div>
                                     )}
