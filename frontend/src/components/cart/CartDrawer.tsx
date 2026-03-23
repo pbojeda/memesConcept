@@ -35,7 +35,7 @@ export const CartDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                 <div className="relative w-screen max-w-md bg-white shadow-xl flex flex-col pointer-events-auto border-l border-gray-200">
                     <div className="p-4 flex items-center justify-between border-b">
                         <h2 className="text-lg font-bold flex items-center">
-                            <ShoppingCart className="mr-2" /> Shopping Cart
+                            <ShoppingCart className="mr-2" /> Carrito
                         </h2>
                         <button
                             className="p-2 hover:bg-gray-100 rounded-full"
@@ -49,7 +49,7 @@ export const CartDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                         {items.length === 0 ? (
                             <div className="h-full flex flex-col items-center justify-center text-gray-500">
                                 <ShoppingCart className="h-12 w-12 mb-4 opacity-20" />
-                                <p>Your cart is empty</p>
+                                <p>Tu carrito está vacío</p>
                             </div>
                         ) : (
                             items.map((item) => <CartItem key={`${item.productId}-${item.variant?.printfulVariantId}`} item={item} />)
@@ -61,20 +61,20 @@ export const CartDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                             <span>€{getTotalPrice().toFixed(2)}</span>
                         </div>
                         <Button
-                            className="w-full py-6 text-lg"
+                            className="w-full py-6 text-lg cursor-pointer"
                             disabled={items.length === 0}
                             onClick={handleCheckout}
                             data-testid="checkout-button"
                         >
-                            Checkout
+                            Tramitar Pedido
                         </Button>
                         <Button
                             variant="outline"
-                            className="w-full mt-2"
+                            className="w-full mt-2 cursor-pointer"
                             onClick={onClose}
                             data-testid="continue-shopping"
                         >
-                            Continue Shopping
+                            Seguir Comprando
                         </Button>
                     </div>
                 </div>

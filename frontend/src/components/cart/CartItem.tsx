@@ -5,6 +5,19 @@ import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
+const colorTranslations: Record<string, string> = {
+    'Black': 'Negro',
+    'White': 'Blanco',
+    'Navy': 'Azul Marino',
+    'Red': 'Rojo',
+    'Blue': 'Azul',
+    'Grey': 'Gris',
+    'Dark Heather': 'Gris oscuro',
+    'Sport Grey': 'Gris claro',
+};
+
+const translateColor = (color: string) => colorTranslations[color] || color;
+
 export const CartItem: React.FC<{ item: CartItemType }> = ({ item }) => {
     const { updateQuantity, removeItem } = useCartStore();
 
@@ -17,8 +30,8 @@ export const CartItem: React.FC<{ item: CartItemType }> = ({ item }) => {
                 <h4 className="font-semibold">{item.product.name}</h4>
                 {item.variant && (
                     <p className="text-sm text-gray-500">
-                        {item.variant.size && `Size: ${item.variant.size}`}
-                        {item.variant.color && ` Color: ${item.variant.color}`}
+                        {item.variant.size && `Talla: ${item.variant.size}`}
+                        {item.variant.color && ` Color: ${translateColor(item.variant.color)}`}
                     </p>
                 )}
                 <div className="mt-2 flex items-center justify-between">

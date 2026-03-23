@@ -21,7 +21,7 @@ describe('Shopping Cart Flow', () => {
 
                 // Select variant
                 if ($body.find('h3:contains("Size")').length > 0) {
-                    cy.get('h3:contains("Size")').parent().find('button').not('.opacity-60').first().click();
+                    cy.get('h3:contains("Talla")').parent().find('button').not('.opacity-60').first().click();
                 }
                 if ($body.find('h3:contains("Color")').length > 0) {
                     cy.get('h3:contains("Color")').parent().find('button').not('.opacity-60').first().click();
